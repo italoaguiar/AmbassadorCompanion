@@ -1,8 +1,8 @@
 # Ambassador Companion
-“Ambassador Companion” is an application for **Windows 10** and **Xbox One** (and now **Xbox Series X/S**) designed to bring the full experience of the Ambassadors website to the console and desktop.
+“Ambassador Companion” is an application for **Windows 10** and **Xbox One** (and now **Xbox Series X/S**) designed to bring the full experience of the [Ambassadors website](https://ambassadors.microsoft.com/xbox) to the console and desktop.
 
 ## Features
-During the development of this project, we tried to bring all the features of the ambassadors platform in one place. Our application, initially had the following features:
+During the development of this project, we tried to bring all the features of the [ambassadors platform](https://ambassadors.microsoft.com/xbox) in one place. Our application, initially had the following features:
 * ~~Responder / Twitter~~ *(Discontinued)*
 * ~~Leaderboard~~ *(Discontinued)*
 * Ambassadors home page
