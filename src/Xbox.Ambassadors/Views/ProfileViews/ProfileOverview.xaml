@@ -1,0 +1,318 @@
+﻿<Page
+    x:Class="Xbox.Ambassadors.Views.ProfileViews.ProfileOverview"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Xbox.Ambassadors.Views.ProfileViews"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cv="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:c="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:chart="using:LiveCharts.Uwp"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequiresPointer="WhenFocused">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <cv:StringFormatConverter x:Key="stringConverter"/>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <ScrollViewer>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="WideView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="pDesc.(RelativePanel.RightOf)" Value=""/>
+                        <Setter Target="pDesc.(RelativePanel.Below)" Value="pp"/>
+                        <Setter Target="pp.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True"/>
+                        <Setter Target="ug1.Rows" Value="2"/>
+                        <Setter Target="ug2.Rows" Value="2"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <StackPanel Margin="15,30,25,10">
+            <RelativePanel>
+                <Grid x:Name="pp">
+                    <PersonPicture Width="220" Height="220" ProfilePicture="{x:Bind ViewModel.Identity.UserDetails.DisplayPic.AbsoluteUri}" Margin="0,20,0,0" />
+                    <Image VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Height="100" Source="{x:Bind FromUri(ViewModel.Profile.CurrentLevel.LevelBadgeUrl)}" Margin="-15"/>
+                </Grid>
+                <StackPanel x:Name="pDesc" RelativePanel.RightOf="pp" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="25,20,0,0">
+                    <TextBlock>
+                                    <Run Text="{x:Bind ViewModel.Identity.UserDetails.FirstName}"/>
+                                    <Run Text="{x:Bind ViewModel.Identity.UserDetails.LastName}"/>
+                    </TextBlock>
+                    <TextBlock FontSize="36" FontWeight="Bold">
+                        <Run Text="{x:Bind ViewModel.Profile.Gamertag,Mode=OneWay}"/>
+                        <Run Text="{x:Bind ViewModel.Profile.CurrentLevel.LongName,Mode=OneWay, Converter={StaticResource stringConverter}, ConverterParameter='{} - {0}'}"/>
+                    </TextBlock>
+                    <TextBlock FontSize="20" Margin="0,10,0,0">
+                                    <Run Text="{x:Bind ViewModel.Profile.CurrentTier.Label,Mode=OneWay, Converter={StaticResource stringConverter}, ConverterParameter='{}{0} Tier Ambassador'}"/>
+                    </TextBlock>
+                    <TextBlock>
+                                    <Run Text="{x:Bind ViewModel.Profile.CurrentTier.XpEarned,Mode=OneWay}"/>/
+                                    <Run Text="{x:Bind ViewModel.Profile.CurrentTier.XpNeededForNextTier,Mode=OneWay}" FontWeight="SemiBold"/> XP
+                    </TextBlock>
+                    <Grid Margin="0,25,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Ambassador since" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Bind ViewModel.Profile.JoinedDateTime,Mode=OneWay,Converter={StaticResource stringConverter},ConverterParameter='{}{0:MMM dd, yy}'}"/>
+
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Highest tier reached" Margin="20,0,0,0" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.Profile.HighestTierEarned.Label,Mode=OneWay}" Margin="20,0,0,0"/>
+                    </Grid>
+                </StackPanel>
+            </RelativePanel>
+
+            <Border CornerRadius="2" Margin="0,40,0,0">
+                <ItemsControl Height="50" ItemsSource="{x:Bind ViewModel.SeasonProgress, Mode=OneWay}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <c:UniformGrid  Rows="1"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderThickness="1,0" BorderBrush="#FF333333">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <ProgressBar VerticalAlignment="Stretch" Value="{Binding Value}" Background="#FF101010" BorderThickness="0,1" BorderBrush="#FF202020" Padding="0,1"/>
+                                    <TextBlock TextAlignment="Center" Grid.Row="1" Text="{Binding Name}"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+
+
+
+            <TextBlock Text="Season Stats" HorizontalAlignment="Left" FontSize="18" Margin="0,50,0,10" TextTrimming="CharacterEllipsis" CanBeScrollAnchor="False" AllowFocusOnInteraction="False"/>
+
+            <c:UniformGrid x:Name="ug1" Rows="1">
+                <StackPanel MinWidth="400">
+                    <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextTrimming="CharacterEllipsis">
+                            XP (<Run Text="{x:Bind ViewModel.SeasonXpCount,Mode=OneWay}"/>)
+                    </TextBlock>
+                    <chart:PieChart InnerRadius="80" Series="{x:Bind ViewModel.SeasonXPChartData,Mode=OneWay}" Height="280" >
+                        <chart:PieChart.ChartLegend>
+                            <chart:DefaultLegend BulletSize="20"></chart:DefaultLegend>
+                        </chart:PieChart.ChartLegend>
+                        <chart:PieChart.DataTooltip>
+                            <chart:DefaultTooltip BulletSize="20"></chart:DefaultTooltip>
+                        </chart:PieChart.DataTooltip>
+                    </chart:PieChart>
+                    <ListBox IsEnabled="False"  Height="50" HorizontalAlignment="Center" Margin="0,15,0,20" ItemsSource="{x:Bind ViewModel.SeasonXPChartData,Mode=OneWay}" BorderThickness="0" Background="Transparent">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Width="20" Height="10" Fill="{Binding Fill}"/>
+                                    <TextBlock Grid.Column="1" Margin="5,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Text="{Binding Title}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <c:UniformGrid Rows="2"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </StackPanel>
+                <StackPanel MinWidth="400">
+                    <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextTrimming="CharacterEllipsis">
+                        Activities (<Run Text="{x:Bind ViewModel.SeasonActivityCount,Mode=OneWay}"/>)
+                    </TextBlock>
+                    <chart:PieChart InnerRadius="80" Series="{x:Bind ViewModel.SeasonActivitiesChartData,Mode=OneWay}" Height="280" >
+                        <chart:PieChart.ChartLegend>
+                            <chart:DefaultLegend BulletSize="20"></chart:DefaultLegend>
+                        </chart:PieChart.ChartLegend>
+                        <chart:PieChart.DataTooltip>
+                            <chart:DefaultTooltip BulletSize="20"></chart:DefaultTooltip>
+                        </chart:PieChart.DataTooltip>
+                    </chart:PieChart>
+                    <ListBox IsEnabled="False" Height="50" HorizontalAlignment="Center" Margin="15,15,15,20" ItemsSource="{x:Bind ViewModel.SeasonActivitiesChartData,Mode=OneWay}" BorderThickness="0" Background="Transparent">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Width="20" Height="10" Fill="{Binding Fill}"/>
+                                    <TextBlock Grid.Column="1" Margin="5,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Text="{Binding Title}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <c:UniformGrid Rows="2"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </StackPanel>
+            </c:UniformGrid>
+
+
+
+            <TextBlock Text="Lifetime stats" HorizontalAlignment="Left" FontSize="18" Margin="0,50,0,10" TextTrimming="CharacterEllipsis" />
+            <c:UniformGrid x:Name="ug2" Rows="1" >
+                <StackPanel MinWidth="400">
+                    <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextTrimming="CharacterEllipsis">
+                        XP (<Run Text="{x:Bind ViewModel.XpCount,Mode=OneWay}"/>)
+                    </TextBlock>
+                    <chart:PieChart InnerRadius="80" Series="{x:Bind ViewModel.LifetimeXP,Mode=OneWay}" Height="280">
+                        <chart:PieChart.ChartLegend>
+                            <chart:DefaultLegend BulletSize="20"></chart:DefaultLegend>
+                        </chart:PieChart.ChartLegend>
+                        <chart:PieChart.DataTooltip>
+                            <chart:DefaultTooltip BulletSize="20"></chart:DefaultTooltip>
+                        </chart:PieChart.DataTooltip>
+                    </chart:PieChart>
+                    <ListBox IsEnabled="False"  Height="50" HorizontalAlignment="Center" Margin="0,15,0,20" ItemsSource="{x:Bind ViewModel.LifetimeXP,Mode=OneWay}" BorderThickness="0" Background="Transparent">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Width="20" Height="10" Fill="{Binding Fill}"/>
+                                    <TextBlock Grid.Column="1" Margin="5,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Text="{Binding Title}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <c:UniformGrid Rows="2"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </StackPanel>
+                <StackPanel MinWidth="400">
+                    <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextTrimming="CharacterEllipsis">
+                        Activities (<Run Text="{x:Bind ViewModel.ActivityCount,Mode=OneWay}"/>)
+                    </TextBlock>
+                    <chart:PieChart InnerRadius="80" Series="{x:Bind ViewModel.LifetimeActivities,Mode=OneWay}" Height="280">
+                        <chart:PieChart.ChartLegend>
+                            <chart:DefaultLegend BulletSize="20"></chart:DefaultLegend>
+                        </chart:PieChart.ChartLegend>
+                        <chart:PieChart.DataTooltip>
+                            <chart:DefaultTooltip BulletSize="20"></chart:DefaultTooltip>
+                        </chart:PieChart.DataTooltip>
+                    </chart:PieChart>
+                    <ListBox IsEnabled="False" Height="50" HorizontalAlignment="Center" Margin="15,15,15,20" ItemsSource="{x:Bind ViewModel.LifetimeActivities,Mode=OneWay}" BorderThickness="0" Background="Transparent">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Width="20" Height="10" Fill="{Binding Fill}"/>
+                                    <TextBlock Grid.Column="1" Margin="5,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Text="{Binding Title}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <c:UniformGrid Rows="2"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </StackPanel>
+            </c:UniformGrid>
+
+
+
+            <TextBlock Text="Lifetime Performance" HorizontalAlignment="Left" FontSize="18" Margin="0,50,0,10" TextTrimming="CharacterEllipsis" CanBeScrollAnchor="False" AllowFocusOnInteraction="False"/>
+            <chart:CartesianChart Series="{x:Bind ViewModel.LifeTimeComparisonChartData,Mode=OneWay}"  Height="350">
+                <chart:CartesianChart.AxisY>
+                    <chart:Axis Title="Count">
+                        <chart:Axis.Separator>
+                            <chart:Separator Stroke="#FF262626" StrokeThickness="1" />
+                        </chart:Axis.Separator>
+                    </chart:Axis>
+                </chart:CartesianChart.AxisY>
+                <chart:CartesianChart.AxisX>
+                    <chart:Axis Title="" Labels="{x:Bind ViewModel.LifeTimeComparisonChartLabels,Mode=OneWay}">
+                        <chart:Axis.Separator>
+                            <chart:Separator Stroke="#FF262626" StrokeThickness="0"/>
+                        </chart:Axis.Separator>
+                    </chart:Axis>
+                </chart:CartesianChart.AxisX>
+            </chart:CartesianChart>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

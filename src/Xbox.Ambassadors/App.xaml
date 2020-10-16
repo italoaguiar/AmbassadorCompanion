@@ -1,0 +1,30 @@
+﻿<Application
+    x:Class="Xbox.Ambassadors.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:y="using:Microsoft.Xbox.Ambassadors.API.YouTube"
+    xmlns:local="using:Xbox.Ambassadors" RequestedTheme="Dark">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/LoadBox.xaml"/>
+                <ResourceDictionary Source="Themes/LikeButton.xaml"/>
+                <ResourceDictionary Source="Themes/DislikeButton.xaml"/>
+                <ResourceDictionary Source="Themes/ItemsFlipView.xaml"/>
+
+                <ResourceDictionary Source="Styles.xaml"/>
+                
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="#FF171717"/>
+
+                    <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundBrush" Color="Transparent" />
+                    <SolidColorBrush x:Key="DataGridColumnHeaderForegroundBrush" Color="#FFCDCDCD" />
+                    
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            <y:Key x:Key="api_key" PublicKey="Your Public Key" SecretKey="no_needed"/>
+        </ResourceDictionary>
+    </Application.Resources>
+
+</Application>

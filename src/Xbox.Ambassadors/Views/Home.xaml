@@ -1,0 +1,340 @@
+﻿<Page
+    x:Class="Xbox.Ambassadors.Views.Home"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrl="using:Xbox.Ambassadors.Views"
+    xmlns:local="using:Xbox.Ambassadors"
+    xmlns:c="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:ani="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:ct="using:Xbox.Ambassadors.Controls"
+    xmlns:cv="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" NavigationCacheMode="Enabled"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <cv:BoolToVisibilityConverter x:Name="visibilityConverter"/>
+            
+
+            <Style TargetType="ListViewItem">
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="0,2"/>
+                <Setter Property="Background" Value="#FF1F1F1F"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            </Style>
+
+            <DataTemplate x:Key="missionFeaturedTemplate">
+                <Grid Height="80" ToolTipService.ToolTip="{Binding DisplayDescription}" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Image Grid.RowSpan="2" Source="/Assets/mission_icon.jpg"/>
+                    <TextBlock Grid.Column="1" Margin="10,5,10,0" Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis" FontWeight="SemiBold"/>
+                    <TextBlock Grid.Column="1" Grid.Row="1" Margin="10,0,10,5" FontSize="12" Text="{Binding DisplayDescription}" Foreground="#FFA5A5A5" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"/>
+
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="missionTemplate">
+                <Grid Height="40" ToolTipService.ToolTip="{Binding DisplayDescription}">
+                    <TextBlock Grid.Column="1" Margin="10,0" VerticalAlignment="Center" Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis"/>
+                </Grid>
+            </DataTemplate>
+            <local:MissionTemplateSelector x:Key="missionTemplateSelector" DefaultTemplate="{StaticResource missionTemplate}" FeaturedTemplate="{StaticResource missionFeaturedTemplate}"/>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="WideView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="850"/>                        
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="sv1.MaxWidth" Value="350"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="MediumView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="sv1.MaxWidth" Value="350"/>
+                        <Setter Target="ug.Columns" Value="1"/>
+                        <Setter Target="ug.Rows" Value="2"/>
+                        <Setter Target="lb1.Margin" Value="0,20,0,0"/>
+                        <Setter Target="lb2.Margin" Value="0,20,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="narrowView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="sv1.(RelativePanel.AlignRightWithPanel)" Value="True"/>
+                        <Setter Target="svContent.(RelativePanel.RightOf)" Value=""/>
+                        <Setter Target="svContent.(RelativePanel.AlignLeftWithPanel)" Value="True"/>
+                        <Setter Target="svContent.(RelativePanel.Below)" Value="sv1"/>
+                        <Setter Target="rootScroll.VerticalScrollMode" Value="Enabled"/>
+                        <Setter Target="rootScroll.VerticalScrollBarVisibility" Value="Auto"/>
+
+                        <Setter Target="ug.Columns" Value="1"/>
+                        <Setter Target="ug.Rows" Value="2"/>
+                        <Setter Target="lb1.Margin" Value="0,20,0,0"/>
+                        <Setter Target="lb2.Margin" Value="0,20,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <ScrollViewer x:Name="rootScroll" VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Disabled">
+            <RelativePanel Margin="30,0,0,0">
+
+                <ScrollViewer x:Name="sv1" VerticalScrollMode="Enabled" RelativePanel.AlignLeftWithPanel="True" MinWidth="380">
+                    <StackPanel Margin="0,25,10,10">
+                        <Button Style="{StaticResource ButtonFlatStyle}" Foreground="White" BorderThickness="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="0" Click="ViewProfile_Click" >
+                            <Grid Height="110" Background="#FF1F1F1F">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="110"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid DataContext="{x:Bind ViewModel}">
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="/Assets/userIcon.png"/>
+                                    </Grid.Background>
+                                    <Image Source="{Binding UserIdentity.UserDetails.DisplayPic}"/>
+                                </Grid>
+
+
+                                <StackPanel Grid.Column="1" Margin="10,2" DataContext="{x:Bind ViewModel.Profile,Mode=OneWay}">
+                                    <TextBlock Text="{Binding Gamertag}" Foreground="White" FontWeight="SemiBold" FontSize="18" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock FontSize="12" TextTrimming="CharacterEllipsis">
+                                        <Run Text="{Binding CurrentTier.Label}"/>
+                                        <Run Text="Tier Ambassador"/>
+                                    </TextBlock>
+                                    <ProgressBar 
+                                            Value="{Binding CurrentTier.XpEarned}" 
+                                            Maximum="{Binding CurrentTier.XpNeededForNextTier}"
+                                            Margin="0,5,5,0" Height="10"/>
+                                    <Grid Margin="0,0,5,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="4*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock HorizontalAlignment="Left" TextTrimming="CharacterEllipsis" FontSize="12">
+                                            Next Tier: <Run Text="{Binding NextTierLabel}"/>
+                                        </TextBlock>
+                                        <TextBlock Grid.Column="2" FontSize="12" TextTrimming="CharacterEllipsis" HorizontalAlignment="Right">
+                                            <Run Text="{Binding CurrentTier.XpEarned}"/>/
+                                            <Run Text="{Binding CurrentTier.XpNeededForNextTier}"/> XP
+                                        </TextBlock>
+                                    </Grid>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" Background="Transparent" ToolTipService.ToolTip="Available sweepstakes tickets">
+                                        <Image Source="{Binding CurrentLevel.LevelHudBadgeUrl}" Height="25" Margin="0,0,0,-5"/>
+                                        <TextBlock Text="{Binding CurrentLevel.LongName}" FontSize="16" VerticalAlignment="Center" Margin="3,0,8,0"/>
+                                        <Path Width="24" Height="24" Margin="0,3,5,0" Stretch="Uniform" VerticalAlignment="Center" StrokeThickness="1" Stroke="#FFFFFFFF" Data="F1 M 2.24,5.44L 18.24,5.44L 18.24,8.96C 17.5331,8.96 16.96,9.53307 16.96,10.24C 16.96,10.9469 17.5331,11.52 18.24,11.52L 18.24,15.04L 2.24,15.04L 2.24,11.52C 2.94692,11.52 3.52,10.9469 3.52,10.24C 3.52,9.53307 2.94692,8.96 2.24,8.96L 2.24,5.44 Z "/>
+                                        <TextBlock Text="{Binding AvailableSweepstakeTickets}" VerticalAlignment="Center" FontSize="16"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+
+                        <ct:LoadBox 
+                            Margin="0,10" MinHeight="180" 
+                            IsLoading="{x:Bind ViewModel.IsMissionsLoading,Mode=OneWay}" 
+                            HasNetworkError="False" 
+                            HasProcessingError="{x:Bind ViewModel.MissionsLoadFailed,Mode=OneWay}"
+                            ReloadCommand="{x:Bind ViewModel.ReloadMissionsCommand}">
+                            <ct:LoadBox.Header>
+                                <Grid>
+                                    <TextBlock Text="Missions" HorizontalAlignment="Left" FontSize="18" Margin="0,10" TextTrimming="CharacterEllipsis"/>
+                                    <HyperlinkButton Click="AllMissions_Click" Content="See All" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="#FFA2A2A2" FontSize="12" Margin="10,0"/>
+                                </Grid>
+                            </ct:LoadBox.Header>
+
+                            <ListView 
+                                SelectionMode="None" 
+                                IsItemClickEnabled="True" 
+                                ItemTemplateSelector="{StaticResource missionTemplateSelector}" 
+                                ItemsSource="{x:Bind ViewModel.MissionsData.TopMissions, Mode=OneWay}" 
+                                ItemClick="Missions_Click">
+                            </ListView>
+                        </ct:LoadBox>
+
+                        <ct:LoadBox 
+                            IsLoading="{x:Bind ViewModel.IsThreadsLoading, Mode=OneWay}"
+                            HasNetworkError="False"
+                            HasProcessingError="{x:Bind ViewModel.ThreadsLoadFailed,Mode=OneWay}"
+                            ReloadCommand="{x:Bind ViewModel.ReloadThreadsCommand}"
+                            DataContext="{x:Bind ViewModel}"
+                            MinHeight="250">
+                            <ct:LoadBox.Header>
+                                <Grid>
+                                    <TextBlock Text="Last Forum Threads" HorizontalAlignment="Left" FontSize="18" Margin="0,10" TextTrimming="CharacterEllipsis"/>
+                                    <HyperlinkButton Content="See All" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="#FFA2A2A2" FontSize="12" Margin="10,0" Click="ViewAllForums_Click"/>
+                                </Grid>
+                            </ct:LoadBox.Header>
+                            <ListView FontFamily="Segoe UI"  ItemsSource="{Binding TopThreads}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ViewForum_Click">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Height="100"  Margin="6,0,0,0" Padding="5,10">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <StackPanel>
+                                                <TextBlock Foreground="White" FontFamily="Arial" FontWeight="Bold" FontSize="16" TextTrimming="CharacterEllipsis" Text="{Binding Title}" ToolTipService.ToolTip="{Binding Title}"/>
+                                                <RichTextBlock FontSize="10" Foreground="#FF969696" FontFamily="Segoe UI" IsTextSelectionEnabled="False" >
+                                                    <Paragraph>
+                                                        <Run Text="{Binding LastReply}" FontFamily="Segoe UI"/>
+                                                        <Run Text="{Binding Date}"/>
+                                                    </Paragraph>
+                                                </RichTextBlock>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding Description}" ToolTipService.ToolTip="{Binding ShortDescription}" Foreground="#FFC8C8C8" Margin="0,5,0,0" FontSize="12" Grid.Row="1" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" FontFamily="Arial"/>
+                                            <TextBlock Grid.Row="2" Text="Locked" FontSize="10" Foreground="#FF9A9A9A" Visibility="{Binding IsLocked, Converter={StaticResource visibilityConverter}}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </ct:LoadBox>                        
+                    </StackPanel>
+                </ScrollViewer>
+
+                <ScrollViewer x:Name="svContent" VerticalScrollMode="Enabled" RelativePanel.RightOf="sv1" RelativePanel.AlignRightWithPanel="True">
+                    <StackPanel Margin="10,25,30,10">
+                        <ct:LoadBox
+                            HasProcessingError="{x:Bind ViewModel.ContentLoadFailed, Mode=OneWay}"
+                            IsLoading="{x:Bind ViewModel.IsContentLoading,Mode=OneWay}"
+                            ReloadCommand="{x:Bind ViewModel.ReloadSiteSectionsCommand}">
+                            <ct:LoadBox.Header>
+                                <TextBlock Text="Announcements" HorizontalAlignment="Left" FontSize="18" Margin="0,0,0,10" TextTrimming="CharacterEllipsis"/>
+                            </ct:LoadBox.Header>
+                            <FlipView Height="350" x:Name="carousel" ItemsSource="{x:Bind ViewModel.Announcements,Mode=OneWay}">
+                                <FlipView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <ParallaxView Source="{Binding ElementName=svContent}" VerticalShift="20">
+                                                <Image Source="{Binding DashboardBaseContent.ImageUrl}" Stretch="UniformToFill" />
+                                            </ParallaxView>
+                                            <Grid VerticalAlignment="Bottom" Height="150">
+                                                <Grid.Background>
+                                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                                        <GradientStop Color="#00000000" Offset="0.0" />
+                                                        <GradientStop Color="#00000000" Offset="0.18" />
+                                                        <GradientStop Color="#DD000000" Offset="1.0" />
+                                                    </LinearGradientBrush>
+                                                </Grid.Background>
+                                                <StackPanel Margin="10,25" VerticalAlignment="Bottom">
+                                                    <HyperlinkButton Grid.Row="1" FontSize="16" VerticalAlignment="Center" Content="{Binding DashboardBaseContent.Header}" Tag="{Binding DashboardBaseContent.CallToActionLink.DestinationUrl}" Click="Navigate_Click"/>
+
+                                                    <TextBlock Grid.Row="2" Margin="0,5,10,0" FontSize="12" Text="{Binding DashboardBaseContent.Content}" Foreground="#FFA5A5A5" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Grid>
+                                    </DataTemplate>
+                                </FlipView.ItemTemplate>
+                            </FlipView>
+                        </ct:LoadBox>
+
+                        <c:UniformGrid x:Name="ug" Columns="2" Margin="0,40,0,0">
+                            <ct:LoadBox 
+                                x:Name="lb1"
+                                Margin="0,20,5,0"
+                                HasProcessingError="{x:Bind ViewModel.ContentLoadFailed,Mode=OneWay}"
+                                IsLoading="{x:Bind ViewModel.IsContentLoading,Mode=OneWay}"
+                                ReloadCommand="{x:Bind ViewModel.ReloadSiteSectionsCommand}">
+                                <ct:LoadBox.Header>
+                                    <TextBlock Text="Featured Blog" HorizontalAlignment="Left" FontSize="18" Margin="0,0,0,10" TextTrimming="CharacterEllipsis"/>
+                                </ct:LoadBox.Header>
+                                <Button Grid.Row="1" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Background="Transparent" Padding="0" BorderThickness="0" Click="Navigate_Click" Tag="{x:Bind ViewModel.FeaturedBlog.DashboardBaseContent.CallToActionLink.DestinationUrl,Mode=OneWay}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="250"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Image Grid.Row="0" Source="{x:Bind UriToImageSource(ViewModel.FeaturedBlog.DashboardBaseContent.ImageUrl),Mode=OneWay}" Stretch="UniformToFill"/>
+                                        <Grid Grid.Row="1" Background="#FF1F1F1F">
+                                            <Grid Margin="10">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Foreground="White" FontFamily="Arial" FontWeight="Bold" FontSize="16" TextTrimming="CharacterEllipsis" Text="{x:Bind ViewModel.FeaturedBlog.DashboardBaseContent.Header,Mode=OneWay}" ToolTipService.ToolTip=""/>
+                                                <TextBlock Text="{x:Bind ViewModel.FeaturedBlog.DashboardBaseContent.Content,Mode=OneWay}" Foreground="#FFC8C8C8" Margin="0,5,0,0" FontSize="12" Grid.Row="1" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" FontFamily="Arial"/>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Button>
+                            </ct:LoadBox>
+
+                            <ct:LoadBox  
+                                x:Name="lb2"
+                                Margin="5,20,0,0"
+                                HasProcessingError="{x:Bind ViewModel.ContentLoadFailed,Mode=OneWay}"
+                                IsLoading="{x:Bind ViewModel.IsContentLoading,Mode=OneWay}"
+                                ReloadCommand="{x:Bind ViewModel.ReloadSiteSectionsCommand}">
+                                <ct:LoadBox.Header>
+                                    <TextBlock Text="{x:Bind ViewModel.FeaturedActivity.SectionTitle,Mode=OneWay}" HorizontalAlignment="Left" FontSize="18" Margin="0,0,0,10" TextTrimming="CharacterEllipsis"/>
+                                </ct:LoadBox.Header>
+                                <Button Grid.Row="1" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Background="Transparent" Padding="0" BorderThickness="0" Click="Navigate_Click" Tag="{x:Bind ViewModel.FeaturedActivity.DashboardBaseContent.CallToActionLink.DestinationUrl, Mode=OneWay}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="250"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Image Grid.Row="0" Source="{x:Bind UriToImageSource(ViewModel.FeaturedActivity.DashboardBaseContent.ImageUrl),Mode=OneWay}" Stretch="UniformToFill"/>
+                                        <Grid Grid.Row="1" Background="#FF1F1F1F">
+                                            <Grid Margin="10">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Foreground="White" FontFamily="Arial" FontWeight="Bold" FontSize="16" TextTrimming="CharacterEllipsis" Text="{x:Bind ViewModel.FeaturedActivity.DashboardBaseContent.Header,Mode=OneWay}" ToolTipService.ToolTip=""/>
+                                                <TextBlock Text="{x:Bind ViewModel.FeaturedActivity.DashboardBaseContent.Content,Mode=OneWay}" Foreground="#FFC8C8C8" Margin="0,5,0,0" FontSize="12" Grid.Row="1" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" FontFamily="Arial"/>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Button>
+                            </ct:LoadBox>
+                        </c:UniformGrid>
+
+
+                        <ct:LoadBox  
+                            Height="350" Margin="0,40,0,0"
+                            HasProcessingError="{x:Bind ViewModel.ContentLoadFailed,Mode=OneWay}"
+                            IsLoading="{x:Bind ViewModel.IsContentLoading,Mode=OneWay}"
+                            ReloadCommand="{x:Bind ViewModel.ReloadSiteSectionsCommand}">
+                            <ct:LoadBox.Header>
+                                <TextBlock Text="Ambassador of The Month" HorizontalAlignment="Left" FontSize="18" Margin="0,0,0,10" TextTrimming="CharacterEllipsis"/>
+                            </ct:LoadBox.Header>
+                            <Button Grid.Row="1" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Background="Transparent" Padding="0" BorderThickness="0" Click="Navigate_Click" Tag="{x:Bind ViewModel.AmbassadorOfMonth.DashboardBaseContent.CallToActionLink.DestinationUrl,Mode=OneWay}">
+                                <Grid Background="#FF1F1F1F">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2.5*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{x:Bind UriToImageSource(ViewModel.AmbassadorOfMonth.DashboardBaseContent.ImageUrl),Mode=OneWay}" Stretch="UniformToFill"/>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10">
+                                        <TextBlock Grid.Column="0" Text="{x:Bind ViewModel.AmbassadorOfMonth.DashboardBaseContent.Header,Mode=OneWay}" HorizontalAlignment="Left" FontSize="28"  TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Grid.Column="0" Text="{x:Bind ViewModel.AmbassadorOfMonth.DashboardBaseContent.Header,Mode=OneWay}" HorizontalAlignment="Left" FontSize="12" FontWeight="Bold" Margin="0,0,0,10" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Grid.Column="0" Text="{x:Bind ViewModel.AmbassadorOfMonth.DashboardBaseContent.Content,Mode=OneWay}" TextWrapping="Wrap" HorizontalAlignment="Left" FontSize="12"  TextTrimming="CharacterEllipsis"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Button>
+                        </ct:LoadBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </RelativePanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

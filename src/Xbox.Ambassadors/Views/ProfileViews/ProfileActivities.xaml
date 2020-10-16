@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="Xbox.Ambassadors.Views.ProfileViews.ProfileActivities"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Xbox.Ambassadors.Views.ProfileViews"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:cv="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <CollectionViewSource x:Key="cvs" Source="{x:Bind ViewModel.UserActivities, Mode=OneWay}" ItemsPath="ActivityList" IsSourceGrouped="True"/>
+            <cv:StringFormatConverter x:Key="stringConverter"/>
+        </ResourceDictionary>
+    </Page.Resources>
+
+
+    <Grid>
+        <ListView Margin="5,0,0,0" ItemsSource="{Binding Source={StaticResource cvs}}" SelectionMode="None" IsItemClickEnabled="False">
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding CreatedDate, Converter={StaticResource stringConverter}, ConverterParameter='{}{0:MMM dd, yy}'}" FontSize="18" Margin="0,30,0,0"/>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding DisplayName}" Margin="10,0,0,0"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+
+        </ListView>
+    </Grid>
+</Page>

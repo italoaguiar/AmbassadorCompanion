@@ -1,0 +1,63 @@
+﻿<Page
+    x:Class="Xbox.Ambassadors.Views.Profile"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Xbox.Ambassadors.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:p="using:Xbox.Ambassadors.Views.ProfileViews"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <Style TargetType="PivotHeaderItem" BasedOn="{StaticResource lineHeaderPivotStyle}"/>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid >
+            <Grid.Background>
+                <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ViewModel.Profile.CurrentTier.TierImg.AbsoluteUri,Mode=OneWay}"/>
+            </Grid.Background>
+            <TextBlock Text="{x:Bind ViewModel.Profile.Gamertag,Mode=OneWay}" Margin="30,0,0,0" FontSize="24" TextTrimming="CharacterEllipsis"  VerticalAlignment="Center"/>
+        </Grid>
+        <Pivot x:Name="pv" Grid.Row="1" Style="{StaticResource linedPivotStyle}" BorderBrush="#FF2F2F2F" PivotItemLoaded="Pivot_PivotItemLoaded">
+            <PivotItem>
+                <PivotItem.Header>
+                    <TextBlock Text="Overview" Margin="30,0,10,0" FontSize="15"/>
+                </PivotItem.Header>
+                <p:ProfileOverview IsEnabled="False"/>
+            </PivotItem>
+            <PivotItem>
+                <PivotItem.Header>
+                    <TextBlock Text="Badges &#x0026; Pins" Margin="10,0" FontSize="15"/>
+                </PivotItem.Header>
+                <p:ProfileBadges IsEnabled="False"/>
+            </PivotItem>
+            <PivotItem>
+                <PivotItem.Header>
+                    <TextBlock Text="Specializations" Margin="10,0" FontSize="15"/>
+                </PivotItem.Header>
+                <p:ProfileSpecializations IsEnabled="False"/>
+            </PivotItem>
+            <PivotItem>
+                <PivotItem.Header>
+                    <TextBlock Text="Activities" Margin="10,0" FontSize="15"/>
+                </PivotItem.Header>
+                <p:ProfileActivities IsEnabled="False"/>
+            </PivotItem>
+            <PivotItem>
+                <PivotItem.Header>
+                    <TextBlock Text="Reactions" Margin="10,0" FontSize="15"/>
+                </PivotItem.Header>
+                <p:ProfileActivities ActivityType="reactions" IsEnabled="False"/>
+            </PivotItem>
+        </Pivot>
+
+    </Grid>
+</Page>

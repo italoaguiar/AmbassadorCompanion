@@ -1,0 +1,156 @@
+﻿<Page
+    x:Class="Xbox.Ambassadors.Views.Rewards"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Xbox.Ambassadors.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:c="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:cv="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:lb="using:Xbox.Ambassadors.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <Style TargetType="PivotHeaderItem" BasedOn="{StaticResource lineHeaderPivotStyle}"/>
+            <Style TargetType="PivotItem">
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+            <Style TargetType="ListViewItem">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+            <cv:StringFormatConverter x:Key="stringConverter"/>
+            <cv:EmptyCollectionToObjectConverter x:Key="collectionConverter" EmptyValue="Visible" NotEmptyValue="Collapsed"/>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Rewards" Margin="30,0,0,0" FontSize="24" TextTrimming="CharacterEllipsis"  VerticalAlignment="Center"/>
+        </Grid>
+        <Pivot Grid.Row="1" Style="{StaticResource linedPivotStyle}" BorderBrush="#FF2F2F2F">
+            <PivotItem>
+                <PivotItem.Header>
+                    <TextBlock Text="Rewards" Margin="30,0,10,0" FontSize="15"/>
+                </PivotItem.Header>
+                <ScrollViewer>
+                    <StackPanel>
+                        <Grid VerticalAlignment="Top" Height="250">
+                            <Grid.Background>
+                                <ImageBrush Opacity=".3" Stretch="UniformToFill" ImageSource="/Assets/XA_BG1.png"/>
+                            </Grid.Background>
+
+                            <StackPanel x:Name="desc" MaxWidth="600" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,15,0">
+                                <TextBlock FontWeight="SemiBold" FontSize="32">
+                                    Make a name for yourself
+                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" Margin="0,10">
+                                    Each activity you complete moves you one step closer to the next Ambassador tier. Each tier comes with exclusive rewards to be claimed at the end of each season. The higher the tier, the better the rewards. If you finish the season in the top 100, you'll get a legendary token of recognition.
+                                </TextBlock>
+                            </StackPanel>
+
+                            
+                        </Grid>
+
+
+
+                        <TextBlock Text="Unlocked" Margin="35,30,10,0" FontSize="20"/>
+                        <TextBlock Margin="35,10,30,10"  TextWrapping="Wrap" Foreground="#b3b3b3">
+                            You will be contacted by an Xbox Ambassadors Team member about your unlocked rewards. For a chance to get reposted from the official Xbox Ambassadors social channels, share a picture of your rewards and tag us using #XboxAmbassadorRewards.
+                        </TextBlock>
+
+                        <lb:LoadBox
+                            IsLoading="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                            HasProcessingError="{x:Bind ViewModel.LoadError, Mode=OneWay}"
+                            ReloadCommand="{x:Bind ViewModel.RetryCommand}"
+                            HasNoData="{x:Bind ViewModel.HasNoUnClaimed,Mode=OneWay}">
+                            <lb:LoadBox.NoDataTemplate>
+                                <ControlTemplate>
+                                    <StackPanel Margin="0,15">
+                                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEA86;" FontSize="40"/>
+                                        <TextBlock Margin="30,0" Text="You have no rewards at this time." TextAlignment="Center" TextWrapping="Wrap"/>
+                                        <TextBlock Margin="30,0" Text="Complete missions and participate in sweepstakes to earn rewards." TextAlignment="Center" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </ControlTemplate>
+                            </lb:LoadBox.NoDataTemplate>
+                            <Grid Margin="30">
+                                <ListView ItemsSource="{x:Bind ViewModel.UnClaimed,Mode=OneWay}" SelectionMode="None" IsItemClickEnabled="True">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Width="180" Height="200" Margin="0,0,0,10" Padding="2">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Image Source="{Binding ImageUri}"/>
+                                                <TextBlock Grid.Row="1" Text="{Binding DisplayName}" TextWrapping="WrapWholeWords" FontWeight="SemiBold" FontSize="16" Margin="8,10"/>
+                                                <TextBlock Grid.Row="2" Text="{Binding EarnedDate, Converter={StaticResource stringConverter}, ConverterParameter='{}{0:MMM dd}'}" Margin="8,0"/>
+
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <c:WrapPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+                                </ListView>                                
+                            </Grid>
+                        </lb:LoadBox>
+                        
+
+                    </StackPanel>
+                </ScrollViewer>
+
+            </PivotItem>
+            <PivotItem>
+                <PivotItem.Header>
+                    <TextBlock Text="Redeemed" Margin="10,0" FontSize="15"/>
+                </PivotItem.Header>
+                <Grid Margin="25,15,30,0">
+                    <lb:LoadBox
+                        IsLoading="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                        HasProcessingError="{x:Bind ViewModel.LoadError, Mode=OneWay}"
+                        ReloadCommand="{x:Bind ViewModel.RetryCommand}"
+                        HasNoData="{x:Bind ViewModel.HasNoClaimed,Mode=OneWay}">
+                        <ListView ItemsSource="{x:Bind ViewModel.Claimed,Mode=OneWay}" SelectionMode="None" IsItemClickEnabled="True">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Width="180" Height="200" Margin="0,0,0,10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Image Source="https://compass-ssl.xboxlive.com/assets/3a/ff/3aff7608-5450-46f3-874a-b59182ebcf4a.png?n=Mousepad.png"/>
+                                        <TextBlock Grid.Row="1" Text="{Binding DisplayName}" TextWrapping="WrapWholeWords" FontWeight="SemiBold" FontSize="16" Margin="8,10"/>
+                                        <TextBlock Grid.Row="2" Text="{Binding EarnedDate, Converter={StaticResource stringConverter}, ConverterParameter='{}{0:MMM dd}'}" Margin="8,0"/>
+
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <c:WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                        </ListView>
+                    </lb:LoadBox>                    
+                </Grid>
+            </PivotItem>
+        </Pivot>
+
+    </Grid>
+</Page>

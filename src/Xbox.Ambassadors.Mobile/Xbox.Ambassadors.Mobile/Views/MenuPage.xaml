@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Padding="0,40,0,0"
+             x:Class="Xbox.Ambassadors.Mobile.Views.MenuPage" BackgroundColor="#FF1F1F1F"
+             Title="Menu">
+             
+    <StackLayout VerticalOptions="FillAndExpand">
+        <ListView x:Name="ListViewMenu"
+                    HasUnevenRows="True">
+            <d:ListView.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Item 1</x:String>
+                    <x:String>Item 2</x:String>
+                </x:Array>
+            </d:ListView.ItemsSource>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{Binding ImageSource}" d:Source="Home.png" WidthRequest="16" HeightRequest="16"/>
+                            <Label Grid.Column="1" TextColor="White" Text="{Binding Title}" d:Text="{Binding .}" FontSize="14" VerticalOptions="Center"/>                            
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>

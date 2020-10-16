@@ -1,0 +1,214 @@
+﻿<Page
+    x:Class="Xbox.Ambassadors.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Xbox.Ambassadors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="using:Xbox.Ambassadors.Views"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <ResourceDictionary>
+            <Style TargetType="ListViewItem">
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="0,2"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
+
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="WideView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1200"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="rightContent.Visibility" Value="Visible"/>
+                        <Setter Target="topBar.Visibility" Value="Collapsed"/>
+                        <Setter Target="nv.PaneDisplayMode" Value="LeftCompact"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="rightContent.Visibility" Value="Collapsed"/>
+                        <Setter Target="topBar.Visibility" Value="Visible"/>
+                        <Setter Target="nv.PaneDisplayMode" Value="LeftMinimal"/>
+                        <Setter Target="contentFrame.Margin" Value="0,40,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Background="Black" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource TitleButton}" Background="Black" Padding="8,1" IsEnabled="{Binding CanGoBack,ElementName=contentFrame}" Tapped="Button_Tapped_1">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;" FontSize="14"/>
+                </Button>
+                <Button Style="{StaticResource TitleButton}" Background="Black" Padding="8,1" Tapped="Button_Tapped">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72C;" FontSize="13"/>
+                </Button>
+            </StackPanel>
+            <Rectangle x:Name="titleBar" Grid.Column="1" Fill="Black" />
+            <TextBlock Grid.Column="1" Text="Xbox Ambassadors Community App" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+
+            <CommandBar x:Name="topBar" Background="#FF1F1F1F" ClosedDisplayMode="Compact" OverflowButtonVisibility="Collapsed">
+                <AppBarButton Tag="Notifications" Click="TopbarButton_Click" ToolTipService.ToolTip="Notifications">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"  Glyph="&#xEA8F;"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <!--<AppBarButton Tag="Leaderboard" Click="TopbarButton_Click" ToolTipService.ToolTip="Leaderboard">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE734;"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>-->
+                <AppBarButton Tag="LiveStatus" Click="TopbarButton_Click" ToolTipService.ToolTip="Xbox Live Status">
+                    <AppBarButton.Icon>
+                        <PathIcon HorizontalAlignment="Center" Data="F1 M 3.82201,12.8593C 2.8254,14.9559 2.8466,16.6863 2.87431,18.4145C 1.08891,16.459 -8.69852e-007,13.8566 -8.69852e-007,11C -8.69852e-007,7.86516 1.31134,5.03659 3.41539,3.03293C 4.20148,2.98425 4.98836,2.93884 5.8979,3.39475C 6.81343,3.85365 7.85323,4.82049 8.89303,5.78732C 6.85904,8.26825 4.82504,10.7492 3.82201,12.8593 Z M 6.29011,1.5751C 5.83789,1.51406 5.44411,1.57789 5.08797,1.72217C 6.79542,0.631882 8.82392,0 11,0C 13.2529,0 15.3477,0.677303 17.0917,1.8394C 16.6595,1.61705 16.1807,1.50251 15.6175,1.58393C 14.3657,1.76493 12.6965,2.91419 11.0274,4.06344C 9.29436,2.90506 7.56136,1.74669 6.29011,1.5751 Z M 16.516,3.27589C 17.4263,2.79387 17.9764,2.8817 18.5231,2.97483C 20.6631,4.98172 22,7.83473 22,11C 22,13.8556 20.9119,16.457 19.1277,18.4123C 19.2004,16.6028 19.269,14.7923 18.2558,12.7108C 17.2388,10.6215 15.1318,8.25913 13.0249,5.89677C 14.3109,4.82961 15.597,3.76245 16.516,3.27589 Z M 17.2069,14.5988C 18.5549,16.3604 18.8414,17.3908 19.1228,18.4177C 17.1114,20.6191 14.2169,22 11,22C 7.78616,22 4.89423,20.6217 2.88304,18.424C 3.30847,17.1852 3.73972,15.9431 5.08528,14.1818C 6.43947,12.4092 8.71973,10.1107 11,7.81219C 13.4262,10.3205 15.8524,12.8288 17.2069,14.5988 Z "/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton Tag="Toolbox" Click="TopbarButton_Click" ToolTipService.ToolTip="Toolbox">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC7A;"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar>
+            
+            <NavigationView x:Name="nv" Loaded="Nv_Loaded" PaneDisplayMode="LeftCompact" IsBackButtonVisible="Collapsed" ItemInvoked="Nv_ItemInvoked">
+                
+                <NavigationView.PaneCustomContent>
+                    <Button Style="{StaticResource ButtonFlatStyle}" Padding="0,5" Click="Profile_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                        <Grid Margin="5,0" DataContext="{x:Bind ViewModel.UserIdentity}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <PersonPicture Width="28" Height="28" ProfilePicture="{Binding UserDetails.DisplayPic}"/>
+                            <StackPanel Grid.Column="1" Margin="10,3" DataContext="{x:Bind ViewModel.Profile}">
+                                <TextBlock Text="{Binding Gamertag}" Foreground="White" TextTrimming="WordEllipsis" FontSize="13" FontWeight="SemiBold"/>
+                                <TextBlock FontSize="11" TextTrimming="WordEllipsis" MaxHeight="20">
+                                    <Run Text="{Binding CurrentTier.Label}"/>
+                                    <Run Text="Tier Ambassador"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Button>
+                </NavigationView.PaneCustomContent>
+                <NavigationView.PaneFooter>
+                    <NavigationViewItem x:Name="feedbackBtn" Content="Feedback" Visibility="Collapsed" Tapped="FeedbackBtn_Tapped">
+                        <NavigationViewItem.Icon>
+                            <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE939;"/>
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                </NavigationView.PaneFooter>
+                <NavigationView.MenuItems>
+                    <NavigationViewItem Icon="Home" Content="Home"/>
+                    <NavigationViewItem Content="Missions">
+                        <NavigationViewItem.Icon>
+                            <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE81B;"/>
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem Content="Forum">
+                        <NavigationViewItem.Icon>
+                            <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8F2;"/>
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>                    
+                    <NavigationViewItem Content="Sweepstakes">
+                        <NavigationViewItem.Icon>
+                            <PathIcon Margin="0,0,2,0" Data="F1 M 1.6,1.6L 17.8933,1.6L 17.8933,5.56489C 17.1734,5.56489 16.5899,6.21039 16.5899,7.00666C 16.5899,7.80294 17.1734,8.44844 17.8933,8.44844L 17.8933,12.4133L 1.6,12.4133L 1.6,8.44844C 2.31988,8.44844 2.90347,7.80294 2.90347,7.00666C 2.90347,6.21039 2.31988,5.56489 1.6,5.56489L 1.6,1.6 Z M 2.90346,2.69634L 2.90346,5.60399C 3.62334,5.60399 4.20692,6.23199 4.20692,7.00667C 4.20692,7.78135 3.62334,8.40935 2.90346,8.40935L 2.90346,11.317L 16.5899,11.317L 16.5899,8.40935C 15.87,8.40935 15.2864,7.78135 15.2864,7.00667C 15.2864,6.23199 15.87,5.60399 16.5899,5.60399L 16.5899,2.69634L 2.90346,2.69634 Z "/>
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem Content="Rewards">
+                        <NavigationViewItem.Icon>
+                            <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF133;"/>
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem Content="Video Gallery">
+                        <NavigationViewItem.Icon>
+                            <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE714;"/>
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem Content="Academy">
+                        <NavigationViewItem.Icon>
+                            <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE825;"/>
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <!--<NavigationViewItem Content="Leaderboard">
+                        <NavigationViewItem.Icon>
+                            <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE734;"/>
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>-->
+                    <NavigationViewItem Content="Handbook">
+                        <NavigationViewItem.Icon>
+                            <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE82D;"/>
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem Icon="Help" Content="Help"/>
+                    
+
+                </NavigationView.MenuItems>
+                <Frame x:Name="contentFrame" Navigated="ContentFrame_Navigated"/>
+            </NavigationView>
+
+            <Grid x:Name="rightContent" Grid.Row="1" Grid.Column="1" Width="320" Background="#FF1F1F1F">
+                <Pivot x:Name="rightPivot">
+                    <PivotItem>
+                        <PivotItem.Header>
+                            <Grid Width="106" ToolTipService.ToolTip="Notifications">
+                                <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"  Glyph="&#xEA8F;"/>
+                            </Grid>
+                        </PivotItem.Header>
+                        <views:SidebarNotifications/>
+                    </PivotItem>
+                    <!--<PivotItem ToolTipService.ToolTip="Leaderboard">
+                        <PivotItem.Header>
+                            <Grid Width="80">
+                                <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE734;"/>
+                            </Grid>
+                        </PivotItem.Header>
+                        <views:SidebarLeaderboard/>
+                    </PivotItem>-->
+                    <PivotItem>
+                        <PivotItem.Header>
+                            <Grid Width="106" ToolTipService.ToolTip="Xbox Live Status">
+                                <PathIcon HorizontalAlignment="Center" Data="F1 M 3.82201,12.8593C 2.8254,14.9559 2.8466,16.6863 2.87431,18.4145C 1.08891,16.459 -8.69852e-007,13.8566 -8.69852e-007,11C -8.69852e-007,7.86516 1.31134,5.03659 3.41539,3.03293C 4.20148,2.98425 4.98836,2.93884 5.8979,3.39475C 6.81343,3.85365 7.85323,4.82049 8.89303,5.78732C 6.85904,8.26825 4.82504,10.7492 3.82201,12.8593 Z M 6.29011,1.5751C 5.83789,1.51406 5.44411,1.57789 5.08797,1.72217C 6.79542,0.631882 8.82392,0 11,0C 13.2529,0 15.3477,0.677303 17.0917,1.8394C 16.6595,1.61705 16.1807,1.50251 15.6175,1.58393C 14.3657,1.76493 12.6965,2.91419 11.0274,4.06344C 9.29436,2.90506 7.56136,1.74669 6.29011,1.5751 Z M 16.516,3.27589C 17.4263,2.79387 17.9764,2.8817 18.5231,2.97483C 20.6631,4.98172 22,7.83473 22,11C 22,13.8556 20.9119,16.457 19.1277,18.4123C 19.2004,16.6028 19.269,14.7923 18.2558,12.7108C 17.2388,10.6215 15.1318,8.25913 13.0249,5.89677C 14.3109,4.82961 15.597,3.76245 16.516,3.27589 Z M 17.2069,14.5988C 18.5549,16.3604 18.8414,17.3908 19.1228,18.4177C 17.1114,20.6191 14.2169,22 11,22C 7.78616,22 4.89423,20.6217 2.88304,18.424C 3.30847,17.1852 3.73972,15.9431 5.08528,14.1818C 6.43947,12.4092 8.71973,10.1107 11,7.81219C 13.4262,10.3205 15.8524,12.8288 17.2069,14.5988 Z "/>
+                            </Grid>
+                        </PivotItem.Header>
+                        <views:SidebarXboxLiveStatus/>
+                    </PivotItem>
+                    <PivotItem>
+                        <PivotItem.Header>
+                            <Grid Width="106" ToolTipService.ToolTip="Toolbox">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC7A;"/>
+                            </Grid>
+                        </PivotItem.Header>
+                        <views:SidebarToolbox/>
+                    </PivotItem>
+                </Pivot>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</Page>

@@ -1,0 +1,171 @@
+﻿<Page
+    x:Class="Xbox.Ambassadors.Views.Leaderboard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Xbox.Ambassadors.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cv="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:k="using:Microsoft.Xbox.Ambassadors.API"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <cv:DoubleToVisibilityConverter x:Key="dConverter" LessThan="101.0"/>
+            <cv:StringFormatConverter x:Key="stringConverter"/>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Margin="30,15,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="WideView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="NarrowView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="col5.Visibility" Value="Collapsed"/>
+                        <Setter Target="col6.Visibility" Value="Collapsed"/>
+                        <Setter Target="iCol5.Visibility" Value="Collapsed"/>
+                        <Setter Target="iCol6.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid >
+            <TextBlock Text="Leaderboard" FontSize="24" TextTrimming="CharacterEllipsis"  VerticalAlignment="Center"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*" MaxWidth="600"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel x:Name="header" Margin="0,10">
+                <TextBlock FontSize="18">
+                Just a little friendly competition
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" Margin="0,10" Foreground="#FFA3A3A3">
+                 You wouldn't be an Xbox Ambassador if gaming didn't thrill you. So, we added a little friendly competition to zest things up. The leaderboard shows where you rank among your fellow Ambassadors based on the XP you have unlocked in a season. Will you make it to the top 100?
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,15,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="65"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" BorderBrush="#FF383838" BorderThickness="0,0,1,1">
+                <TextBlock Text="Position" Margin="5" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Column="1" BorderBrush="#FF383838" BorderThickness="0,0,1,1">
+                <TextBlock Text="GamerTag" Margin="5" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Column="2" BorderBrush="#FF383838" BorderThickness="0,0,1,1">
+                <TextBlock Text="Season XP" Margin="5" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Column="3" BorderBrush="#FF383838" BorderThickness="0,0,1,1">
+                <TextBlock Text="Activity Count" Margin="5" HorizontalAlignment="Center"/>
+            </Border>
+            <Border x:Name="col5" Width="200" Grid.Column="4" BorderBrush="#FF383838" BorderThickness="0,0,1,1">
+                <TextBlock Text="Ambassador Since" Margin="5" HorizontalAlignment="Center"/>
+            </Border>
+            <Border x:Name="col6" Width="80" Grid.Column="5" BorderBrush="#FF383838" BorderThickness="0,0,0,1"/>
+        </Grid>
+
+        <Grid Margin="0,5" Grid.Row="3" Background="{ThemeResource SystemAccentColor}" Padding="0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="65"/>
+                <ColumnDefinition  />
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+
+            <TextBlock Grid.Column="0" Text="{x:Bind ViewModel.MyRank.Rank, Mode=OneWay}" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.MyRank.Id, Mode=OneWay}" FontSize="16" Margin="10,0" TextTrimming="CharacterEllipsis"/>
+            <TextBlock Grid.Column="2" Text="{x:Bind ViewModel.MyRank.ExperiencePoints,Mode=OneWay}" Foreground="#FFA3A3A3" TextAlignment="Center"/>
+            <TextBlock Grid.Column="3" Foreground="#FFA3A3A3" Text="{x:Bind ViewModel.MyRank.TotalActivitiesCompleted,Mode=OneWay}" TextAlignment="Center"/>
+
+            <TextBlock x:Name="iCol5" Width="200" Grid.Column="4" Foreground="#FFA3A3A3" Text="{x:Bind ViewModel.MyRank.JoinedDateTime,Mode=OneWay, Converter={StaticResource stringConverter}, ConverterParameter='{}{0:MMM dd, yy}'}" TextAlignment="Center"/>
+
+            <Grid x:Name="iCol6" Width="80" Grid.Column="5">
+                <StackPanel Visibility="{x:Bind ViewModel.MyRank.Rank, Mode=OneWay, Converter={StaticResource dConverter}}" VerticalAlignment="Center" Margin="0">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE735;" Foreground="#f0e407"/>
+                    <TextBlock FontSize="9" Text="Top 100" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <ListView Grid.Row="4" ItemsSource="{x:Bind ViewModel.Leaderboard,Mode=OneWay}" SelectionMode="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <UserControl>
+                        <Grid Margin="0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="itemCol1" Width="65"/>
+                                <ColumnDefinition x:Name="itemCol2" />
+                                <ColumnDefinition x:Name="itemCol3" Width="100" />
+                                <ColumnDefinition x:Name="itemCol4" Width="120"/>
+                                <ColumnDefinition x:Name="itemCol5" Width="200"/>
+                                <ColumnDefinition x:Name="itemCol6" Width="80"/>
+                            </Grid.ColumnDefinitions>
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup>
+                                    <VisualState x:Name="WideView">
+                                        <VisualState.StateTriggers>
+                                            <AdaptiveTrigger MinWindowWidth="800"/>
+                                        </VisualState.StateTriggers>
+                                    </VisualState>
+                                    <VisualState x:Name="NarrowView">
+                                        <VisualState.StateTriggers>
+                                            <AdaptiveTrigger MinWindowWidth="0"/>
+                                        </VisualState.StateTriggers>
+                                        <VisualState.Setters>
+                                            <Setter Target="itemCol5.Width" Value="0"/>
+                                            <Setter Target="itemCol6.Width" Value="0"/>
+                                        </VisualState.Setters>
+                                    </VisualState>                                    
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <TextBlock Grid.Column="0" Text="{Binding Rank}" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Id}" FontSize="16" Margin="10,0" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="2" Text="{Binding ExperiencePoints}" Foreground="#FFA3A3A3" TextAlignment="Center"/>
+                            <TextBlock Grid.Column="3" Foreground="#FFA3A3A3" Text="{Binding TotalActivitiesCompleted}" TextAlignment="Center"/>
+
+                            <TextBlock Width="200" Grid.Column="4" Foreground="#FFA3A3A3" Text="{Binding Path=JoinedDateTime,Converter={StaticResource stringConverter}, ConverterParameter='{}{0:MMM dd, yy}'}" TextAlignment="Center"/>
+                            
+                            <StackPanel Visibility="{Binding Rank, Converter={StaticResource dConverter}}" Grid.Column="5" Grid.RowSpan="3" VerticalAlignment="Center" Margin="5,0,10,0">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE735;" Foreground="#f0e407"/>
+                                <TextBlock FontSize="9" Text="Top 100" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                    </UserControl>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>

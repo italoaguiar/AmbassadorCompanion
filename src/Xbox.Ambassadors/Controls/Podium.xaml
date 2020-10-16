@@ -1,0 +1,186 @@
+﻿<UserControl
+    x:Class="Xbox.Ambassadors.Controls.Podium"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Xbox.Ambassadors.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Loaded="UserControl_Loaded"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style TargetType="ListViewItem">
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="0,2"/>
+                <Setter Property="Background" Value="#FF1F1F1F"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            </Style>
+            <Storyboard x:Name="PersonPictureAnimation" RepeatBehavior="Forever">
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="personPicture" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
+                    <EasingDoubleKeyFrame KeyTime="00:00:00" Value="-80">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <QuadraticEase EasingMode="EaseInOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                    <EasingDoubleKeyFrame KeyTime="00:00:02" Value="-100">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <QuadraticEase EasingMode="EaseInOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                    <EasingDoubleKeyFrame KeyTime="00:00:04" Value="-80">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <QuadraticEase EasingMode="EaseInOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                </DoubleAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="personPicture1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
+                    <EasingDoubleKeyFrame KeyTime="00:00:00" Value="-120">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <ExponentialEase EasingMode="EaseInOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                    <EasingDoubleKeyFrame KeyTime="00:00:02" Value="-140">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <ExponentialEase EasingMode="EaseInOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                    <EasingDoubleKeyFrame KeyTime="00:00:04" Value="-120">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <ExponentialEase EasingMode="EaseInOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                </DoubleAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="personPicture2" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
+                    <EasingDoubleKeyFrame KeyTime="00:00:00" Value="-60">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <ExponentialEase EasingMode="EaseInOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                    <EasingDoubleKeyFrame KeyTime="00:00:02" Value="-80">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <ExponentialEase EasingMode="EaseInOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                    <EasingDoubleKeyFrame KeyTime="00:00:04" Value="-60">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <ExponentialEase EasingMode="EaseInOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border Grid.Row="1" BorderBrush="#FF1F1F1F" BorderThickness="0,0,0,1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" MinWidth="60"/>
+                    <ColumnDefinition Width="3*" MinWidth="60"/>
+                    <ColumnDefinition Width="3*" MinWidth="60"/>
+                    <ColumnDefinition Width=".5*"/>
+                    <ColumnDefinition Width="7*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel x:Name="personPicture" Grid.Column="0" Margin="5,0" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5">
+                    <StackPanel.RenderTransform>
+                        <CompositeTransform TranslateY="-80"/>
+                    </StackPanel.RenderTransform>
+                    <Canvas Width="47.994" Height="47.994" Canvas.Left="0" Canvas.Top="0">
+                        <Path Width="5.20873" Height="12.3665" Canvas.Left="6.15157" Canvas.Top="4.31138" Stretch="Fill" Fill="#FFD2D2D2" Data="F1 M 8.023,4.31146C 8.023,4.31146 10.8703,6.1958 11.3026,10.3427C 11.7345,14.4862 9.6,16.6779 9.6,16.6779C 9.6,16.6779 6.85514,14.9981 6.27922,11.1586C 5.57256,6.44752 8.03079,4.29587 8.023,4.31146 Z "/>
+                        <Path Width="6.15117" Height="11.5538" Canvas.Left="2.58718" Canvas.Top="12.2857" Stretch="Fill" Fill="#FFD2D2D2" Data="F1 M 3.37866,12.2858C 3.37866,12.2858 6.61275,13.3806 8.08972,17.2796C 9.56546,21.1754 8.06141,23.8395 8.06141,23.8395C 8.06141,23.8395 4.9786,22.9164 3.44126,19.3512C 1.55496,14.9768 3.38222,12.2688 3.37866,12.2858 Z "/>
+                        <Path Width="9.50738" Height="8.18484" Canvas.Left="0.704307" Canvas.Top="22.922" Stretch="Fill" Fill="#FFD2D2D2" Data="F1 M 0.716458,22.9615C 0.716458,22.9615 4.09022,22.4366 7.20282,25.2107C 10.3129,27.9824 10.2113,31.0402 10.2113,31.0402C 10.2113,31.0402 7.05102,31.6473 4.03929,29.1972C 0.343892,26.1909 0.711718,22.9448 0.716458,22.9615 Z "/>
+                        <Path Width="12.1787" Height="5.43847" Canvas.Left="3.31731" Canvas.Top="32.599" Stretch="Fill" Fill="#FFD2D2D2" Data="F1 M 3.3174,33.932C 3.3174,33.932 6.04792,31.8821 10.0994,32.8664C 14.1476,33.8499 15.496,36.5961 15.496,36.5961C 15.496,36.5961 12.9925,38.6182 9.18238,37.8723C 4.50733,36.9571 3.30533,33.9194 3.3174,33.932 Z "/>
+                        <Path Width="12.3509" Height="5.22784" Canvas.Left="11.1709" Canvas.Top="37.9804" Stretch="Fill" Fill="#FFD2D2D2" Data="F1 M 23.5217,39.8027C 23.5217,39.8027 21.6646,42.6678 17.5221,43.1397C 13.3829,43.6111 11.1709,41.4976 11.1709,41.4976C 11.1709,41.4976 12.8244,38.7369 16.6583,38.1243C 21.3624,37.3728 23.5374,39.8104 23.5217,39.8027 Z "/>
+                        <Path Width="5.20872" Height="12.3665" Canvas.Left="36.5214" Canvas.Top="4.25992" Stretch="Fill" Fill="#FFD2D2D2" Data="F1 M 39.8587,4.26C 39.8587,4.26 37.0115,6.14434 36.5792,10.2912C 36.1472,14.4347 38.2817,16.6265 38.2817,16.6265C 38.2817,16.6265 41.0266,14.9467 41.6025,11.1071C 42.3092,6.39606 39.8509,4.24441 39.8587,4.26 Z "/>
+                        <Path Width="6.15117" Height="11.5538" Canvas.Left="39.1434" Canvas.Top="12.2343" Stretch="Fill" Fill="#FFD2D2D2" Data="F1 M 44.5031,12.2344C 44.5031,12.2344 41.269,13.3291 39.792,17.2281C 38.3163,21.1239 39.8203,23.7881 39.8203,23.7881C 39.8203,23.7881 42.9031,22.8649 44.4405,19.2998C 46.3268,14.9254 44.4995,12.2173 44.5031,12.2344 Z "/>
+                        <Path Width="9.50737" Height="8.18484" Canvas.Left="37.6701" Canvas.Top="22.8705" Stretch="Fill" Fill="#FFD2D2D2" Data="F1 M 47.1653,22.9101C 47.1653,22.9101 43.7915,22.3852 40.6789,25.1592C 37.5689,27.931 37.6704,30.9887 37.6704,30.9887C 37.6704,30.9887 40.8307,31.5958 43.8425,29.1457C 47.5379,26.1394 47.17,22.8933 47.1653,22.9101 Z "/>
+                        <Path Width="12.1787" Height="5.43847" Canvas.Left="32.3857" Canvas.Top="32.5475" Stretch="Fill" Fill="#FFD2D2D2" Data="F1 M 44.5643,33.8805C 44.5643,33.8805 41.8338,31.8306 37.7823,32.8149C 33.7341,33.7984 32.3857,36.5447 32.3857,36.5447C 32.3857,36.5447 34.8892,38.5667 38.6994,37.8208C 43.3744,36.9057 44.5764,33.8679 44.5643,33.8805 Z "/>
+                        <Path Width="12.3509" Height="5.22784" Canvas.Left="24.3599" Canvas.Top="37.929" Stretch="Fill" Fill="#FFD2D2D2" Data="F1 M 24.36,39.7513C 24.36,39.7513 26.2171,42.6164 30.3597,43.0882C 34.4988,43.5597 36.7108,41.4462 36.7108,41.4462C 36.7108,41.4462 35.0573,38.6854 31.2235,38.0729C 26.5193,37.3213 24.3443,39.7589 24.36,39.7513 Z "/>
+                        <Path Width="23.5639" Height="16.2219" Canvas.Left="12.1284" Canvas.Top="14.0155" Stretch="Fill" Fill="#FFD2D2D2" Data="F1 M 13.0464,22.5252C 13.593,20.8987 14.6772,17.8441 15.1981,16.4646C 15.59,15.4267 15.796,15.9249 16.078,15.36C 16.1393,15.0328 15.8647,14.4649 16.9712,14.3049C 17.1187,14.2836 18.6926,13.9562 19.7575,14.0249C 21.4107,14.1316 21.4532,14.9889 21.9039,15.0115C 22.7038,15.0515 25.5039,15.0037 26.0101,15.0248C 26.2853,15.0363 26.4506,14.2977 27.2899,14.1316C 28.4021,13.9114 30.1829,14.1182 31.0628,14.4115C 31.924,14.6595 31.6894,14.9315 31.836,15.36C 31.9985,15.8347 32.1324,15.6749 32.3693,15.878C 32.5687,16.0489 33.6292,18.7403 34.56,21.624C 35.9155,25.8234 36.5136,29.4141 33.6758,30.1962C 32.0688,30.6391 30.8061,27.3957 28.5164,25.7301C 27.6205,25.0784 24.771,25.2102 23.797,25.2102C 22.4255,25.2102 20.2775,25.1169 19.3842,25.8101C 17.3213,27.4112 16.2113,29.6363 15.36,29.9963C 15.022,30.1392 13.3285,30.406 12.5051,28.8C 11.7719,27.3699 12.1931,24.6316 13.0464,22.5252 Z M 23.9317,17.28C 23.2101,17.28 22.6252,17.8649 22.6252,18.5865C 22.6252,19.3081 23.2101,19.893 23.9317,19.893C 24.6532,19.893 25.2382,19.3081 25.2382,18.5865C 25.2382,17.8649 24.6532,17.28 23.9317,17.28 Z "/>
+                    </Canvas>
+
+                    <TextBlock x:Name="person"  TextAlignment="Center"  TextTrimming="CharacterEllipsis" Height="20"/>
+
+                </StackPanel>
+                <Grid Grid.Column="0" Height="70" VerticalAlignment="Bottom" Background="#FF1F1F1F">
+                    <TextBlock Text="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" FontWeight="Bold" Foreground="#FF797979"/>
+                </Grid>
+
+
+                <StackPanel x:Name="personPicture1" Grid.Column="1" Margin="5,0" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5">
+                    <StackPanel.RenderTransform>
+                        <CompositeTransform TranslateY="-120"/>
+                    </StackPanel.RenderTransform>
+                    <Canvas Width="47.994" Height="47.994" Canvas.Left="0" Canvas.Top="0">
+                        <Path Width="5.20873" Height="12.3665" Canvas.Left="6.15157" Canvas.Top="4.31138" Stretch="Fill" Fill="#FFFFDE00" Data="F1 M 8.023,4.31146C 8.023,4.31146 10.8703,6.1958 11.3026,10.3427C 11.7345,14.4862 9.6,16.6779 9.6,16.6779C 9.6,16.6779 6.85514,14.9981 6.27922,11.1586C 5.57256,6.44752 8.03079,4.29587 8.023,4.31146 Z "/>
+                        <Path Width="6.15117" Height="11.5538" Canvas.Left="2.58718" Canvas.Top="12.2857" Stretch="Fill" Fill="#FFFFDE00" Data="F1 M 3.37866,12.2858C 3.37866,12.2858 6.61275,13.3806 8.08972,17.2796C 9.56546,21.1754 8.06141,23.8395 8.06141,23.8395C 8.06141,23.8395 4.9786,22.9164 3.44126,19.3512C 1.55496,14.9768 3.38222,12.2688 3.37866,12.2858 Z "/>
+                        <Path Width="9.50738" Height="8.18484" Canvas.Left="0.704307" Canvas.Top="22.922" Stretch="Fill" Fill="#FFFFDE00" Data="F1 M 0.716458,22.9615C 0.716458,22.9615 4.09022,22.4366 7.20282,25.2107C 10.3129,27.9824 10.2113,31.0402 10.2113,31.0402C 10.2113,31.0402 7.05102,31.6473 4.03929,29.1972C 0.343892,26.1909 0.711718,22.9448 0.716458,22.9615 Z "/>
+                        <Path Width="12.1787" Height="5.43847" Canvas.Left="3.31731" Canvas.Top="32.599" Stretch="Fill" Fill="#FFFFDE00" Data="F1 M 3.3174,33.932C 3.3174,33.932 6.04792,31.8821 10.0994,32.8664C 14.1476,33.8499 15.496,36.5961 15.496,36.5961C 15.496,36.5961 12.9925,38.6182 9.18238,37.8723C 4.50733,36.9571 3.30533,33.9194 3.3174,33.932 Z "/>
+                        <Path Width="12.3509" Height="5.22784" Canvas.Left="11.1709" Canvas.Top="37.9804" Stretch="Fill" Fill="#FFFFDE00" Data="F1 M 23.5217,39.8027C 23.5217,39.8027 21.6646,42.6678 17.5221,43.1397C 13.3829,43.6111 11.1709,41.4976 11.1709,41.4976C 11.1709,41.4976 12.8244,38.7369 16.6583,38.1243C 21.3624,37.3728 23.5374,39.8104 23.5217,39.8027 Z "/>
+                        <Path Width="5.20872" Height="12.3665" Canvas.Left="36.5214" Canvas.Top="4.25992" Stretch="Fill" Fill="#FFFFDE00" Data="F1 M 39.8587,4.26C 39.8587,4.26 37.0115,6.14434 36.5792,10.2912C 36.1472,14.4347 38.2817,16.6265 38.2817,16.6265C 38.2817,16.6265 41.0266,14.9467 41.6025,11.1071C 42.3092,6.39606 39.8509,4.24441 39.8587,4.26 Z "/>
+                        <Path Width="6.15117" Height="11.5538" Canvas.Left="39.1434" Canvas.Top="12.2343" Stretch="Fill" Fill="#FFFFDE00" Data="F1 M 44.5031,12.2344C 44.5031,12.2344 41.269,13.3291 39.792,17.2281C 38.3163,21.1239 39.8203,23.7881 39.8203,23.7881C 39.8203,23.7881 42.9031,22.8649 44.4405,19.2998C 46.3268,14.9254 44.4995,12.2173 44.5031,12.2344 Z "/>
+                        <Path Width="9.50737" Height="8.18484" Canvas.Left="37.6701" Canvas.Top="22.8705" Stretch="Fill" Fill="#FFFFDE00" Data="F1 M 47.1653,22.9101C 47.1653,22.9101 43.7915,22.3852 40.6789,25.1592C 37.5689,27.931 37.6704,30.9887 37.6704,30.9887C 37.6704,30.9887 40.8307,31.5958 43.8425,29.1457C 47.5379,26.1394 47.17,22.8933 47.1653,22.9101 Z "/>
+                        <Path Width="12.1787" Height="5.43847" Canvas.Left="32.3857" Canvas.Top="32.5475" Stretch="Fill" Fill="#FFFFDE00" Data="F1 M 44.5643,33.8805C 44.5643,33.8805 41.8338,31.8306 37.7823,32.8149C 33.7341,33.7984 32.3857,36.5447 32.3857,36.5447C 32.3857,36.5447 34.8892,38.5667 38.6994,37.8208C 43.3744,36.9057 44.5764,33.8679 44.5643,33.8805 Z "/>
+                        <Path Width="12.3509" Height="5.22784" Canvas.Left="24.3599" Canvas.Top="37.929" Stretch="Fill" Fill="#FFFFDE00" Data="F1 M 24.36,39.7513C 24.36,39.7513 26.2171,42.6164 30.3597,43.0882C 34.4988,43.5597 36.7108,41.4462 36.7108,41.4462C 36.7108,41.4462 35.0573,38.6854 31.2235,38.0729C 26.5193,37.3213 24.3443,39.7589 24.36,39.7513 Z "/>
+                        <Path Width="23.5639" Height="16.2219" Canvas.Left="12.1284" Canvas.Top="14.0155" Stretch="Fill" Fill="#FFFFDE00" Data="F1 M 13.0464,22.5252C 13.593,20.8987 14.6772,17.8441 15.1981,16.4646C 15.59,15.4267 15.796,15.9249 16.078,15.36C 16.1393,15.0328 15.8647,14.4649 16.9712,14.3049C 17.1187,14.2836 18.6926,13.9562 19.7575,14.0249C 21.4107,14.1316 21.4532,14.9889 21.9039,15.0115C 22.7038,15.0515 25.5039,15.0037 26.0101,15.0248C 26.2853,15.0363 26.4506,14.2977 27.2899,14.1316C 28.4021,13.9114 30.1829,14.1182 31.0628,14.4115C 31.924,14.6595 31.6894,14.9315 31.836,15.36C 31.9985,15.8347 32.1324,15.6749 32.3693,15.878C 32.5687,16.0489 33.6292,18.7403 34.56,21.624C 35.9155,25.8234 36.5136,29.4141 33.6758,30.1962C 32.0688,30.6391 30.8061,27.3957 28.5164,25.7301C 27.6205,25.0784 24.771,25.2102 23.797,25.2102C 22.4255,25.2102 20.2775,25.1169 19.3842,25.8101C 17.3213,27.4112 16.2113,29.6363 15.36,29.9963C 15.022,30.1392 13.3285,30.406 12.5051,28.8C 11.7719,27.3699 12.1931,24.6316 13.0464,22.5252 Z M 23.9317,17.28C 23.2101,17.28 22.6252,17.8649 22.6252,18.5865C 22.6252,19.3081 23.2101,19.893 23.9317,19.893C 24.6532,19.893 25.2382,19.3081 25.2382,18.5865C 25.2382,17.8649 24.6532,17.28 23.9317,17.28 Z "/>
+                    </Canvas>
+
+
+                    <TextBlock x:Name="person1"  TextAlignment="Center" TextTrimming="CharacterEllipsis" Height="20"/>
+                </StackPanel>
+                <Grid Grid.Column="1" Height="110" VerticalAlignment="Bottom" Background="#FF1F1F1F">
+                    <TextBlock Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="36" FontWeight="Bold" Foreground="#FF797979"/>
+                </Grid>
+
+
+                <StackPanel x:Name="personPicture2" Grid.Column="2" Margin="5,0"  VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5">
+                    <StackPanel.RenderTransform>
+                        <CompositeTransform TranslateY="-60"/>
+                    </StackPanel.RenderTransform>
+                    <Canvas Width="47.994" Height="47.994" Canvas.Left="0" Canvas.Top="0">
+                        <Path Width="5.20873" Height="12.3665" Canvas.Left="6.15157" Canvas.Top="4.31138" Stretch="Fill" Fill="#FFB89224" Data="F1 M 8.023,4.31146C 8.023,4.31146 10.8703,6.1958 11.3026,10.3427C 11.7345,14.4862 9.6,16.6779 9.6,16.6779C 9.6,16.6779 6.85514,14.9981 6.27922,11.1586C 5.57256,6.44752 8.03079,4.29587 8.023,4.31146 Z "/>
+                        <Path Width="6.15117" Height="11.5538" Canvas.Left="2.58718" Canvas.Top="12.2857" Stretch="Fill" Fill="#FFB89224" Data="F1 M 3.37866,12.2858C 3.37866,12.2858 6.61275,13.3806 8.08972,17.2796C 9.56546,21.1754 8.06141,23.8395 8.06141,23.8395C 8.06141,23.8395 4.9786,22.9164 3.44126,19.3512C 1.55496,14.9768 3.38222,12.2688 3.37866,12.2858 Z "/>
+                        <Path Width="9.50738" Height="8.18484" Canvas.Left="0.704307" Canvas.Top="22.922" Stretch="Fill" Fill="#FFB89224" Data="F1 M 0.716458,22.9615C 0.716458,22.9615 4.09022,22.4366 7.20282,25.2107C 10.3129,27.9824 10.2113,31.0402 10.2113,31.0402C 10.2113,31.0402 7.05102,31.6473 4.03929,29.1972C 0.343892,26.1909 0.711718,22.9448 0.716458,22.9615 Z "/>
+                        <Path Width="12.1787" Height="5.43847" Canvas.Left="3.31731" Canvas.Top="32.599" Stretch="Fill" Fill="#FFB89224" Data="F1 M 3.3174,33.932C 3.3174,33.932 6.04792,31.8821 10.0994,32.8664C 14.1476,33.8499 15.496,36.5961 15.496,36.5961C 15.496,36.5961 12.9925,38.6182 9.18238,37.8723C 4.50733,36.9571 3.30533,33.9194 3.3174,33.932 Z "/>
+                        <Path Width="12.3509" Height="5.22784" Canvas.Left="11.1709" Canvas.Top="37.9804" Stretch="Fill" Fill="#FFB89224" Data="F1 M 23.5217,39.8027C 23.5217,39.8027 21.6646,42.6678 17.5221,43.1397C 13.3829,43.6111 11.1709,41.4976 11.1709,41.4976C 11.1709,41.4976 12.8244,38.7369 16.6583,38.1243C 21.3624,37.3728 23.5374,39.8104 23.5217,39.8027 Z "/>
+                        <Path Width="5.20872" Height="12.3665" Canvas.Left="36.5214" Canvas.Top="4.25992" Stretch="Fill" Fill="#FFB89224" Data="F1 M 39.8587,4.26C 39.8587,4.26 37.0115,6.14434 36.5792,10.2912C 36.1472,14.4347 38.2817,16.6265 38.2817,16.6265C 38.2817,16.6265 41.0266,14.9467 41.6025,11.1071C 42.3092,6.39606 39.8509,4.24441 39.8587,4.26 Z "/>
+                        <Path Width="6.15117" Height="11.5538" Canvas.Left="39.1434" Canvas.Top="12.2343" Stretch="Fill" Fill="#FFB89224" Data="F1 M 44.5031,12.2344C 44.5031,12.2344 41.269,13.3291 39.792,17.2281C 38.3163,21.1239 39.8203,23.7881 39.8203,23.7881C 39.8203,23.7881 42.9031,22.8649 44.4405,19.2998C 46.3268,14.9254 44.4995,12.2173 44.5031,12.2344 Z "/>
+                        <Path Width="9.50737" Height="8.18484" Canvas.Left="37.6701" Canvas.Top="22.8705" Stretch="Fill" Fill="#FFB89224" Data="F1 M 47.1653,22.9101C 47.1653,22.9101 43.7915,22.3852 40.6789,25.1592C 37.5689,27.931 37.6704,30.9887 37.6704,30.9887C 37.6704,30.9887 40.8307,31.5958 43.8425,29.1457C 47.5379,26.1394 47.17,22.8933 47.1653,22.9101 Z "/>
+                        <Path Width="12.1787" Height="5.43847" Canvas.Left="32.3857" Canvas.Top="32.5475" Stretch="Fill" Fill="#FFB89224" Data="F1 M 44.5643,33.8805C 44.5643,33.8805 41.8338,31.8306 37.7823,32.8149C 33.7341,33.7984 32.3857,36.5447 32.3857,36.5447C 32.3857,36.5447 34.8892,38.5667 38.6994,37.8208C 43.3744,36.9057 44.5764,33.8679 44.5643,33.8805 Z "/>
+                        <Path Width="12.3509" Height="5.22784" Canvas.Left="24.3599" Canvas.Top="37.929" Stretch="Fill" Fill="#FFB89224" Data="F1 M 24.36,39.7513C 24.36,39.7513 26.2171,42.6164 30.3597,43.0882C 34.4988,43.5597 36.7108,41.4462 36.7108,41.4462C 36.7108,41.4462 35.0573,38.6854 31.2235,38.0729C 26.5193,37.3213 24.3443,39.7589 24.36,39.7513 Z "/>
+                        <Path Width="23.5639" Height="16.2219" Canvas.Left="12.1284" Canvas.Top="14.0155" Stretch="Fill" Fill="#FFB89224" Data="F1 M 13.0464,22.5252C 13.593,20.8987 14.6772,17.8441 15.1981,16.4646C 15.59,15.4267 15.796,15.9249 16.078,15.36C 16.1393,15.0328 15.8647,14.4649 16.9712,14.3049C 17.1187,14.2836 18.6926,13.9562 19.7575,14.0249C 21.4107,14.1316 21.4532,14.9889 21.9039,15.0115C 22.7038,15.0515 25.5039,15.0037 26.0101,15.0248C 26.2853,15.0363 26.4506,14.2977 27.2899,14.1316C 28.4021,13.9114 30.1829,14.1182 31.0628,14.4115C 31.924,14.6595 31.6894,14.9315 31.836,15.36C 31.9985,15.8347 32.1324,15.6749 32.3693,15.878C 32.5687,16.0489 33.6292,18.7403 34.56,21.624C 35.9155,25.8234 36.5136,29.4141 33.6758,30.1962C 32.0688,30.6391 30.8061,27.3957 28.5164,25.7301C 27.6205,25.0784 24.771,25.2102 23.797,25.2102C 22.4255,25.2102 20.2775,25.1169 19.3842,25.8101C 17.3213,27.4112 16.2113,29.6363 15.36,29.9963C 15.022,30.1392 13.3285,30.406 12.5051,28.8C 11.7719,27.3699 12.1931,24.6316 13.0464,22.5252 Z M 23.9317,17.28C 23.2101,17.28 22.6252,17.8649 22.6252,18.5865C 22.6252,19.3081 23.2101,19.893 23.9317,19.893C 24.6532,19.893 25.2382,19.3081 25.2382,18.5865C 25.2382,17.8649 24.6532,17.28 23.9317,17.28 Z "/>
+                    </Canvas>
+
+
+                    <TextBlock x:Name="person2" TextAlignment="Center" TextTrimming="CharacterEllipsis" Height="20"/>
+                </StackPanel>
+                <Grid Grid.Column="2" Height="50" VerticalAlignment="Bottom" Background="#FF1F1F1F">
+                    <TextBlock Text="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="26" FontWeight="Bold" Foreground="#FF797979"/>
+                </Grid>
+
+                <ListView Grid.Column="5" x:Name="lvItems" SelectionMode="None" IsItemClickEnabled="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="40">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Margin="10,0" VerticalAlignment="Center" Text="{Binding Index}" TextTrimming="CharacterEllipsis" FontSize="12" />
+                                <TextBlock Grid.Column="1" Margin="0" VerticalAlignment="Center" Text="{Binding Item.Id}" TextTrimming="CharacterEllipsis" FontSize="12"/>
+                                <RichTextBlock IsTextSelectionEnabled="False" Grid.Column="2" Margin="10,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" FontSize="12">
+                                    <Paragraph>
+                                        <Run Text="{Binding Item.ExperiencePoints}"/> XP
+                                    </Paragraph>
+                                </RichTextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

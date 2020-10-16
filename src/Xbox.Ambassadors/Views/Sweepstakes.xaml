@@ -1,0 +1,294 @@
+﻿<Page
+    x:Class="Xbox.Ambassadors.Views.Sweepstakes"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Xbox.Ambassadors.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:c="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:u="using:Xbox.Ambassadors.Controls"
+    xmlns:lc="using:Xbox.Ambassadors.Controls"
+    xmlns:cv="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequiresPointer="WhenFocused">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <Style TargetType="PivotHeaderItem" BasedOn="{StaticResource lineHeaderPivotStyle}"/>
+            <Style TargetType="PivotItem">
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+            <Style TargetType="ListViewItem">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+            <cv:StringFormatConverter x:Key="stringConverter"/>            
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="WideView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="NarrowView">
+                    <VisualState.Setters>
+                        <Setter Target="desc.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Sweepstakes" Margin="30,0,0,0" FontSize="24" TextTrimming="CharacterEllipsis"  VerticalAlignment="Center"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,0,15,0" Background="Transparent" ToolTipService.ToolTip="Available sweepstakes tickets">
+                <Path Width="24" Height="24" Margin="0,4,5,0" Stretch="Uniform" VerticalAlignment="Center" StrokeThickness="1" Stroke="#FFFFFFFF" Data="F1 M 2.24,5.44L 18.24,5.44L 18.24,8.96C 17.5331,8.96 16.96,9.53307 16.96,10.24C 16.96,10.9469 17.5331,11.52 18.24,11.52L 18.24,15.04L 2.24,15.04L 2.24,11.52C 2.94692,11.52 3.52,10.9469 3.52,10.24C 3.52,9.53307 2.94692,8.96 2.24,8.96L 2.24,5.44 Z "/>
+                <TextBlock Text="{x:Bind ViewModel.Profile.AvailableSweepstakeTickets,Mode=OneWay}" VerticalAlignment="Center" FontSize="16"/>
+            </StackPanel>
+        </Grid>
+        <Pivot Grid.Row="1" Style="{StaticResource linedPivotStyle}" BorderBrush="#FF2F2F2F">
+            <PivotItem XYFocusDown="{x:Bind l1}">
+                <PivotItem.Header>
+                    <TextBlock Text="Sweepstakes" Margin="30,0,10,0" FontSize="15"/>
+                </PivotItem.Header>
+                <ScrollViewer>
+                    <StackPanel>
+                        <Grid VerticalAlignment="Top" Height="400">
+                            <Grid.Background>
+                                <ImageBrush Opacity=".3" Stretch="UniformToFill" ImageSource="/Assets/XA_BG1.png"/>
+                            </Grid.Background>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel x:Name="desc" Width="350" Margin="30,80,0,0">
+                                <TextBlock FontWeight="SemiBold" FontSize="32">
+                            Do good, win big
+                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" Margin="0,10">
+                            Here’s a chance to test your luck. Simply enter any number of your available sweepstakes tickets into an open sweepstakes and you'll be entered to win. Want a shot at all the prizes? Divide your tickets and enter sweepstakes tickets for each one.
+                                </TextBlock>
+                            </StackPanel>
+
+                            <Grid Grid.Column="1">
+
+                                <lc:LoadBox 
+                                    IsLoading="{x:Bind ViewModel.IsLoadingSweepstakes, Mode=OneWay}"
+                                    HasProcessingError="{x:Bind ViewModel.LoadSweepstakesFailed, Mode=OneWay}"
+                                    ReloadCommand="{x:Bind ViewModel.ReloadSweepstakesCommand}"
+                                    HasNoData="{x:Bind ViewModel.HasNoSweepstakes,Mode=OneWay}">
+                                    <u:ItemsFlipView x:Name="l1" Margin="20,0,10,0" VerticalAlignment="Center" ItemsSource="{x:Bind ViewModel.Sweepstakes, Mode=OneWay}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="OnItemClicked" XYFocusDown="{x:Bind l2}">
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" Margin="10,0"/>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Width="280">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="150"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Image Stretch="UniformToFill" RenderTransformOrigin=".5,.5" Source="{Binding ImageUrl}"/>
+                                                    <Grid Margin="5" Grid.Row="1">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="80"/>
+                                                            <RowDefinition Height="Auto"/>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock Grid.Row="0" Text="{Binding RewardDefinition.DisplayName}" FontWeight="SemiBold" FontSize="16"/>
+                                                        <TextBlock Grid.Row="1" FontSize="12" Foreground="#FFE4E4E4">
+                                            <Run Text="{Binding NumberOfWinners}"/> Winners |
+                                            $<Run Text="{Binding Value}"/> Value | 
+                                            <Run Text="{Binding StartDate,Converter={StaticResource stringConverter}, ConverterParameter='{}{0:MMM dd}'}"/> - 
+                                            <Run Text="{Binding EndDate, Converter={StaticResource stringConverter}, ConverterParameter='{}{0:MMM dd}'}"/>
+                                                        </TextBlock>
+                                                        <TextBlock Text="{Binding RewardDefinition.DisplayDescription}" Grid.Row="2" FontSize="12" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Foreground="#FFA5A5A5"/>
+
+
+                                                        <Grid Grid.Row="3" Margin="0,10">
+                                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,0,15,0" ToolTipService.ToolTip="Available sweepstakes tickets">
+                                                                <Path Width="24" Height="24" Margin="0,4,5,0" Stretch="Uniform" VerticalAlignment="Center" StrokeThickness="1" Stroke="#FFFFFFFF" Data="F1 M 2.24,5.44L 18.24,5.44L 18.24,8.96C 17.5331,8.96 16.96,9.53307 16.96,10.24C 16.96,10.9469 17.5331,11.52 18.24,11.52L 18.24,15.04L 2.24,15.04L 2.24,11.52C 2.94692,11.52 3.52,10.9469 3.52,10.24C 3.52,9.53307 2.94692,8.96 2.24,8.96L 2.24,5.44 Z "/>
+                                                                <TextBlock Text="{Binding TicketsEntered,TargetNullValue=0}" VerticalAlignment="Center" FontSize="16"/>
+                                                            </StackPanel>
+                                                            <SymbolIcon Symbol="Add" HorizontalAlignment="Right" Margin="3"/>
+                                                        </Grid>
+                                                    </Grid>
+
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="IsTabStop" Value="True"/>
+                                                <Setter Property="Padding" Value="10"/>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                    </u:ItemsFlipView>
+                                </lc:LoadBox>
+                                
+
+
+                            </Grid>
+                        </Grid>
+
+
+
+                        <TextBlock Text="Upcoming" Margin="35,30,10,0" FontSize="20"/>
+
+                        <Grid Margin="30,10,20,20">
+                            <lc:LoadBox
+                                IsLoading="{x:Bind ViewModel.IsLoadingUpcoming, Mode=OneWay}"
+                                HasProcessingError="{x:Bind ViewModel.LoadUpcomingFailed, Mode=OneWay}"
+                                ReloadCommand="{x:Bind ViewModel.ReloadUpcomingCommand}"
+                                HasNoData="{x:Bind ViewModel.HasNoUpcoming,Mode=OneWay}">
+                                <u:ItemsFlipView x:Name="l2" ItemsSource="{x:Bind ViewModel.Upcomming, Mode=OneWay}" SelectionMode="None" IsItemClickEnabled="True" XYFocusUp="{x:Bind l1}">
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Width="280">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="150"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Image Stretch="UniformToFill" RenderTransformOrigin=".5,.5" Source="{Binding ImageUrl}"/>
+                                                <Grid Margin="5" Grid.Row="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="80"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0" Text="{Binding RewardDefinition.DisplayName}" FontWeight="SemiBold" FontSize="16"/>
+                                                    <TextBlock Grid.Row="1" FontSize="12" Foreground="#FFE4E4E4">
+                                            <Run Text="{Binding NumberOfWinners}"/> Winners |
+                                            $<Run Text="{Binding Value}"/> Value | 
+                                            <Run Text="{Binding StartDate,Converter={StaticResource stringConverter}, ConverterParameter='{}{0:MMM dd}'}"/> - 
+                                            <Run Text="{Binding EndDate, Converter={StaticResource stringConverter}, ConverterParameter='{}{0:MMM dd}'}"/>
+                                                    </TextBlock>
+                                                    <TextBlock Text="{Binding RewardDefinition.DisplayDescription}" Grid.Row="2" FontSize="12" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Foreground="#FFA5A5A5"/>
+
+                                                </Grid>
+
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="IsTabStop" Value="True"/>
+                                            <Setter Property="Padding" Value="10"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                </u:ItemsFlipView>
+                            </lc:LoadBox>
+                            <StackPanel Padding="10,40,10,0" MaxWidth="400" Visibility="{x:Bind ViewModel.Upcomming, Converter={StaticResource NullToVisibilityConverter}}">
+                                <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE916;" FontSize="40"/>
+                                <TextBlock Margin="30,0" Text="We have not yet selected the next items." TextAlignment="Center" TextWrapping="Wrap"/>
+                                <TextBlock Margin="30,0" Text="Calm down, they'll be here soon!." TextAlignment="Center" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+                
+            </PivotItem>
+            <PivotItem>
+                <PivotItem.Header>
+                    <TextBlock Text="Expired" Margin="10,0" FontSize="15"/>
+                </PivotItem.Header>
+                <Grid>
+                    <lc:LoadBox
+                        IsLoading="{x:Bind ViewModel.IsLoadingExpired, Mode=OneWay}"
+                        HasProcessingError="{x:Bind ViewModel.LoadExpiredFailed, Mode=OneWay}"
+                        ReloadCommand="{x:Bind ViewModel.ReloadExpiredCommand}"
+                        HasNoData="{x:Bind ViewModel.HasNoExpired,Mode=OneWay}">
+                        <ListView Margin="30,0,0,0" Padding="0,20" ItemsSource="{x:Bind ViewModel.Expired,Mode=OneWay}" SelectionMode="None" IsItemClickEnabled="False">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <UserControl>
+                                        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,5">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup>
+                                                    <VisualState x:Name="itemWideView">
+                                                        <VisualState.StateTriggers>
+                                                            <AdaptiveTrigger MinWindowWidth="900"/>
+                                                        </VisualState.StateTriggers>
+                                                    </VisualState>
+                                                    <VisualState x:Name="itemNarrowView">
+                                                        <VisualState.StateTriggers>
+                                                            <AdaptiveTrigger MinWindowWidth="0"/>
+                                                        </VisualState.StateTriggers>
+                                                        <VisualState.Setters>
+                                                            <Setter Target="img.Visibility" Value="Collapsed"/>
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+
+                                            <Image x:Name="img" Stretch="UniformToFill" Height="150" VerticalAlignment="Top" Source="{Binding ImageUrl}"/>
+                                            <Grid Margin="5,0,0,3" Grid.Column="1">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Grid.Row="0" FontSize="16">
+                                            <Run FontWeight="SemiBold" Text="{Binding RewardDefinition.DisplayName}"/>
+                                            (<Run Text="{Binding StartDate,Converter={StaticResource stringConverter}, ConverterParameter='{}{0:MMM dd}'}"/> - 
+                                            <Run Text="{Binding EndDate, Converter={StaticResource stringConverter}, ConverterParameter='{}{0:MMM dd}'}"/>)
+                                                </TextBlock>
+                                                <TextBlock HorizontalAlignment="Left" MaxWidth="600" Text="{Binding RewardDefinition.DisplayDescription}" Grid.Row="1" FontSize="12" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Foreground="#FFA5A5A5" Margin="0,0,15,0"/>
+
+                                                <TextBlock Text="Winners:" Grid.Row="2" FontSize="14" TextWrapping="Wrap" Margin="0,5" FontWeight="SemiBold" Foreground="#FFA5A5A5"/>
+                                                <ItemsControl ItemsSource="{Binding Winners}" Grid.Row="3">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <c:WrapPanel Orientation="Horizontal" HorizontalAlignment="Left" MaxWidth="600"/>
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Border CornerRadius="8" Background="#383838" Margin="0,0,5,5">
+                                                                <TextBlock Text="{Binding}" Margin="5,2" FontSize="12" Foreground="#b0b0b0"/>
+                                                            </Border>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </Grid>
+
+                                        </Grid>
+                                    </UserControl>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </lc:LoadBox>
+                </Grid>
+            </PivotItem>
+        </Pivot>
+
+    </Grid>
+</Page>

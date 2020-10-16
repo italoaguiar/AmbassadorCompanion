@@ -1,0 +1,165 @@
+﻿<Page
+    x:Class="Xbox.Ambassadors.Views.Quizz"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Xbox.Ambassadors.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cv="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:lc="using:Xbox.Ambassadors.Controls"
+    xmlns:c="using:Xbox.Ambassadors.Converters"
+    xmlns:s="using:Xbox.Ambassadors" 
+    mc:Ignorable="d"
+    d:DesignHeight="600"
+    d:DesignWidth="800" XYFocusRight="{x:Bind ElementToFocus, Mode=OneWay}">
+
+    <Page.Resources>
+
+        <c:NullableBooleanConverter x:Key="boolConverter" NullValue="White" FalseValue="Red" TrueValue="White"/>
+
+        <cv:BoolToVisibilityConverter x:Key="visibilityConverter" />
+        <cv:BoolToVisibilityConverter x:Key="invertedVisibilityConverter" FalseValue="Visible" TrueValue="Collapsed" />
+
+        <DataTemplate x:Key="singleQuestionTemplate">
+            <StackPanel Margin="0,15">
+                <TextBlock Foreground="{Binding IsCorrect,Converter={StaticResource boolConverter}}" TextWrapping="WrapWholeWords" Text="{Binding QuestionText}" Margin="0,10"/>
+                <ItemsControl x:Name="ans" ItemsSource="{Binding Answers}" Tag="{Binding QuestionId}" IsTabStop="False" >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <RadioButton 
+                                Loaded="ElementLoaded"
+                                CanBeScrollAnchor="True"
+                                IsTabStop="True"
+                                XYFocusDownNavigationStrategy="RectilinearDistance" 
+                                XYFocusUpNavigationStrategy="RectilinearDistance"
+                                AllowFocusOnInteraction="True" GroupName="{Binding Tag, ElementName=ans}" Content="{Binding AnswerText}" IsChecked="{Binding IsSelected,Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="multiQuestionTemplate">
+            <StackPanel Margin="0,15">
+                <TextBlock Foreground="{Binding IsCorrect,Converter={StaticResource boolConverter}}" TextWrapping="WrapWholeWords" Text="{Binding QuestionText}" Margin="0,10"/>
+                <ItemsControl ItemsSource="{Binding Answers}" IsTabStop="False" >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox 
+                                Loaded="ElementLoaded"
+                                CanBeScrollAnchor="True"
+                                IsTabStop="True"
+                                XYFocusDownNavigationStrategy="RectilinearDistance" 
+                                XYFocusUpNavigationStrategy="RectilinearDistance"
+                                AllowFocusOnInteraction="True" Content="{Binding AnswerText}" IsChecked="{Binding IsSelected,Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </DataTemplate>
+
+        <s:QuizzQuestionTemplateSelector x:Key="quizzSelector" MultiQuestion="{StaticResource multiQuestionTemplate}" SingleQuestion="{StaticResource singleQuestionTemplate}"/>
+    </Page.Resources>
+
+    <ScrollViewer XYFocusRight="{x:Bind ElementToFocus, Mode=OneWay}" NoFocusCandidateFound="ScrollViewer_NoFocusCandidateFound">
+        <lc:LoadBox
+            AllowFocusOnInteraction="False"
+            IsLoading="{x:Bind ViewModel.IsQuizzLoading,Mode=OneWay}"
+            HasProcessingError="{x:Bind ViewModel.LoadQuizzFailed,Mode=OneWay}"
+            ReloadCommand="{x:Bind ViewModel.RetryLoadCommand}">
+            <Grid x:Name="rootGrid" Margin="30,30,15,15" DataContext="{x:Bind ViewModel.Quizz,Mode=OneWay}">
+                <Grid TabFocusNavigation="Cycle">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding Title}" HorizontalAlignment="Left" FontSize="18" Margin="0,0,0,10" TextTrimming="CharacterEllipsis"/>
+
+                    <TextBlock Grid.Row="1" Margin="0,10" TextWrapping="WrapWholeWords" Text="{Binding Description}"/>
+
+                    <TextBlock Grid.Row="2" Margin="0,20,0,10" Text="Resources" HorizontalAlignment="Left" FontSize="16"  TextTrimming="CharacterEllipsis"/>
+
+                    <ItemsControl ItemsSource="{Binding Resources}" Grid.Row="3" IsTabStop="False" XYFocusKeyboardNavigation="Enabled">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <HyperlinkButton IsTabStop="True" AllowFocusOnInteraction="True" Content="{Binding Title}" Foreground="{ThemeResource SystemAccentColor}" NavigateUri="{Binding Url}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <Border x:Name="resultContainer" Visibility="{x:Bind ViewModel.ResultBoxVisible,Mode=OneWay,Converter={StaticResource visibilityConverter}}" Grid.Row="4" Height="200" Background="#FF1F1F1F" Margin="0,30" DataContext="{x:Bind ViewModel,Mode=OneWay}">
+                        <Grid Margin="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Visibility="{x:Bind ViewModel.QuizzPassed,Mode=OneWay,Converter={StaticResource invertedVisibilityConverter}}" Text="YOU FAILED THE QUIZZ" FontSize="20" FontWeight="SemiBold"/>
+                            <TextBlock Visibility="{x:Bind ViewModel.QuizzPassed,Mode=OneWay,Converter={StaticResource visibilityConverter}}" Text="YOU PASSED THE QUIZZ" FontSize="20" FontWeight="SemiBold"/>
+
+                            <TextBlock Visibility="{x:Bind ViewModel.QuizzPassed,Mode=OneWay,Converter={StaticResource invertedVisibilityConverter}}" Grid.Row="1" Text="Review your answers and try again" FontSize="14" />
+                            <TextBlock Visibility="{x:Bind ViewModel.QuizzPassed,Mode=OneWay,Converter={StaticResource visibilityConverter}}" Grid.Row="1" Text="You passed, XP is on the way." FontSize="14" />
+
+                            <RichTextBlock Grid.Row="2" VerticalAlignment="Center" Margin="20,0,0,0" Width="150" HorizontalAlignment="Left">
+                                <Paragraph FontSize="28" TextAlignment="Center">
+                                    <Run FontSize="60" FontWeight="SemiBold" Text="{Binding TotalCorrect}" FontFamily="Segoe UI"/>
+                                    <Run Text="/"/>
+                                    <Run FontSize="28" Text="{Binding QuestionCount}" FontFamily="Segoe UI"/>
+                                </Paragraph>
+                            </RichTextBlock>
+
+                            <Button IsTabStop="True" AllowFocusOnInteraction="True" Visibility="{x:Bind ViewModel.QuizzPassed,Mode=OneWay,Converter={StaticResource invertedVisibilityConverter}}" Grid.Row="3" Margin="20,0,0,10" Width="150" Command="{x:Bind ViewModel.RetakeCommand}" Background="{ThemeResource SystemAccentColor}">Retake The Quizz</Button>
+
+                            <Grid Grid.Column="1" Grid.RowSpan="4">
+
+                                <ProgressBar x:Name="prog" Background="#FF383838" Width="145" Height="145"  VerticalAlignment="Stretch" Value="{Binding Quizz.Score}" HorizontalAlignment="Stretch" RenderTransformOrigin="0.5,0.5" Foreground="{ThemeResource SystemAccentColor}">
+                                    <ProgressBar.RenderTransform>
+                                        <CompositeTransform Rotation="-90"/>
+                                    </ProgressBar.RenderTransform>
+                                </ProgressBar>
+
+                                <Path Width="150" Height="150" Stretch="Fill" Fill="#FF1F1F1F" Data="F1 M 135.823,67.0456C 140.918,56.3066 143.125,45.9115 144.245,35.6459L 156.48,35.358C 156.48,35.358 156.922,70.9676 129.708,77.9264C 132.029,74.3801 134.092,70.693 135.823,67.0456 Z M 103.599,101.277C 110.002,99.2059 116.298,94.3454 121.866,88.1672C 165.262,82.2244 164.591,28.0926 164.591,28.0926L 145.196,28.5489L 144.85,28.8287C 145.127,24.9312 145.305,21.0456 145.482,17.16L 49.9224,17.16C 50.1693,20.9476 50.4162,24.7351 50.7466,28.5337L 32,28.0926C 32,28.0926 31.3498,80.5412 72.7167,87.8527C 78.5618,94.7827 85.3344,100.109 92.3793,101.799L 92.235,102.316C 87.3964,119.473 78.895,130.575 69.7736,140.652L 69.7736,145.795L 56.9958,145.795L 56.9958,186.182L 51.976,186.182L 51.976,192L 143.246,192L 143.246,186.182L 138.226,186.182L 138.226,145.795L 126.893,145.795L 126.893,139.633C 117.324,129.822 108.561,118.897 103.885,102.316L 103.599,101.277 Z M 59.81,67.0456C 61.3852,70.5416 63.2363,74.0741 65.3122,77.484C 39.6866,69.5833 40.1109,35.3581 40.1109,35.3581L 51.4786,35.6255C 52.7333,45.8978 54.9681,56.2995 59.81,67.0456 Z M 0,1.52588e-005L 200.16,1.52588e-005L 200.16,200.16L 0,200.16L 0,1.52588e-005 Z "/>
+                                <RichTextBlock HorizontalAlignment="Center" Margin="0,30,0,0" Foreground="#FF545454">
+                                    <Paragraph FontSize="18" FontWeight="Black">
+                                        <Run Text="{Binding Quizz.Score}"/> %
+                                    </Paragraph>
+                                </RichTextBlock>
+                                <RichTextBlock HorizontalAlignment="Center" Margin="0,30,0,0" Foreground="#FFE4E4E4" >
+                                    <Paragraph FontSize="18" FontWeight="Bold">
+                                        <Run Text="{Binding Quizz.Score}"/> %
+                                    </Paragraph>
+                                </RichTextBlock>
+                            </Grid>
+
+                        </Grid>
+                    </Border>
+
+                    <Grid Grid.Row="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <ItemsControl 
+                            IsEnabled="{x:Bind ViewModel.InteractionEnabled,Mode=OneWay}" 
+                            ItemsSource="{Binding Questions}" Margin="0,40,0,0" 
+                            ItemTemplateSelector="{StaticResource quizzSelector}"
+                            UseSystemFocusVisuals="True"
+                            IsTabStop="False"/>
+
+                        <Button AllowFocusOnInteraction="True" Grid.Row="1" Command="{x:Bind ViewModel.SubmitCommand}" HorizontalAlignment="Center" Margin="20" Background="{ThemeResource SystemAccentColor}">Submit</Button>
+                    </Grid>
+
+                </Grid>
+            </Grid>
+        </lc:LoadBox>
+    </ScrollViewer>
+</Page>

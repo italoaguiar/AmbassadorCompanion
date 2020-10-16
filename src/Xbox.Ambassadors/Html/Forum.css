@@ -1,0 +1,126 @@
+﻿* {
+    color: #C8C8C8 !important;
+}
+body {
+    background-color: #1f1f1f !important;
+    color: #C8C8C8 !important;
+}
+body #Main #PageContent #threadMain #threadMainContent .thread-message .m-card.thread-message-content {
+    background-color: #1f1f1f !important;
+    color: #C8C8C8 !important;
+    margin-right:10px !important;
+}
+blockquote {
+    background-color: #333333 !important;
+}
+#Header {
+    display: none !important;
+    visibility: hidden;
+}
+#Footer {
+    display: none !important;
+    visibility: hidden;
+}
+#threadMainContent {
+    background-color: #1f1f1f !important;
+}
+#threadSummarySideBar {
+    background-color: #1f1f1f !important;
+}
+#threadBottomSection {
+    background-color: #171717 !important;
+}
+#allRepliesLink {
+    background-color: #171717 !important;
+}
+#threadMain {
+    background-color: #1f1f1f !important;
+}
+#tabStripChevron {
+    color: #757575 !important;
+}
+.thread-message {
+    background-color: #171717 !important;
+}
+.message-voting-container {
+    background-color: #1f1f1f !important;
+}
+.thread-message-content-reply-action-button{
+    background-color: #2b2b2b !important;
+}
+.m-card {
+    background-color: #414141 !important;
+}
+.thread-message-content {
+    background-color: #414141 !important;
+}
+.site-survey-opener {
+    display: none !important;
+    visibility: hidden;
+}
+.c-heading-5 {
+    color: #757575 !important;
+}
+.c-hyperlink {
+    color: #757575 !important;
+}
+.m-alert {
+    background-color: #333333 !important;
+    color: #c3bbbd !important;
+}
+.f-information {
+    background-color: #333333 !important;
+    color: #c3bbbd !important;
+}
+.unSelectedNumberFont {
+    color: #757575 !important;
+}
+
+
+
+
+<style type="text/css" >
+::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+}
+
+::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #9b9b9b;
+    border: 0px none #ffffff;
+    border-radius: 50px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #6d6d6d;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: #313131;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    border: 0px none #ffffff;
+    border-radius: 50px;
+}
+
+    ::-webkit-scrollbar-track:hover {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-track:active {
+        background: transparent;
+    }
+
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+
+
