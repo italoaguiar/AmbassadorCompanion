@@ -10,7 +10,7 @@ namespace Microsoft.Xbox.Ambassadors.API
 {
     public static class Courses
     {
-        private const string REQUEST_URI = "https://ambassadors.westus.cloudapp.azure.com:8637/api/academy/courses";
+        private const string REQUEST_URI = "https://ambassadors-production.azure-api.net/api/academy/courses";
 
         public async static Task<Course[]> GetAsync(AccessToken token)
         {

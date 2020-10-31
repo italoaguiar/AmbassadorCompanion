@@ -11,7 +11,7 @@ namespace Microsoft.Xbox.Ambassadors.API
     public partial class SiteContent
     {
         const string REQUEST_URI =
-            "https://ambassadors.westus.cloudapp.azure.com:8637/api/content?market=us&language=en-us&documentAliases=";
+            "https://ambassadors-production.azure-api.net/api/content?market=us&language=en-us&documentAliases=";
 
         public const string ANNOUNCEMENTS = "microsoft-ambassadors/xbox-ambassadors/dashboard-announcements";
         public const string FEATURED_MISSION = "microsoft-ambassadors/xbox-ambassadors/dashboard-featuredMission";

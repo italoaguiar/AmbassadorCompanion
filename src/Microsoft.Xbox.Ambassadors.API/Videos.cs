@@ -20,8 +20,8 @@ namespace Microsoft.Xbox.Ambassadors.API
             "&$count=true" +
             "&$skip={2}";
 
-        const string VOTE_URI = "https://ambassadors.westus.cloudapp.azure.com:8637/api/videos/votes/";
-        const string VIDEO_URI = "https://ambassadors.westus.cloudapp.azure.com:8637/api/videos";
+        const string VOTE_URI = "https://ambassadors-production.azure-api.net/api/videos/votes/";
+        const string VIDEO_URI = "https://ambassadors-production.azure-api.net/api/videos";
 
 
         [JsonPropertyName("@odata.context")]

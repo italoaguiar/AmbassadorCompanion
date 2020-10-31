@@ -48,7 +48,7 @@ namespace Xbox.Ambassadors.ViewModels.Profile
             set
             {
                 seasonXPChartData = value;
-                RaisePropertyChanged("SeasonXPChartData");
+                RaisePropertyChanged(nameof(SeasonXPChartData));
             }
         }
 
@@ -58,7 +58,7 @@ namespace Xbox.Ambassadors.ViewModels.Profile
             set
             {
                 seasonActivitiesChartData = value;
-                RaisePropertyChanged("SeasonActivitiesChartData");
+                RaisePropertyChanged(nameof(SeasonActivitiesChartData));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Xbox.Ambassadors.ViewModels.Profile
             set
             {
                 lifeTimeComparisonChartData = value;
-                RaisePropertyChanged("LifeTimeComparisonChartData");
+                RaisePropertyChanged(nameof(LifeTimeComparisonChartData));
             }
         }
 
@@ -78,7 +78,7 @@ namespace Xbox.Ambassadors.ViewModels.Profile
             set
             {
                 lifeTimeComparisonChartLabels = value;
-                RaisePropertyChanged("LifeTimeComparisonChartLabels");
+                RaisePropertyChanged(nameof(LifeTimeComparisonChartLabels));
             }
         }
 
@@ -88,7 +88,7 @@ namespace Xbox.Ambassadors.ViewModels.Profile
             set
             {
                 seasonProgress = value;
-                RaisePropertyChanged("SeasonProgress");
+                RaisePropertyChanged(nameof(SeasonProgress));
             }
         }
 
@@ -98,7 +98,7 @@ namespace Xbox.Ambassadors.ViewModels.Profile
             set
             {
                 seasonActivityCount = value;
-                RaisePropertyChanged("SeasonActivityCount");
+                RaisePropertyChanged(nameof(SeasonActivityCount));
             }
         }
         public long SeasonXpCount
@@ -107,7 +107,7 @@ namespace Xbox.Ambassadors.ViewModels.Profile
             set
             {
                 seasonXpCount = value;
-                RaisePropertyChanged("SeasonXpCount");
+                RaisePropertyChanged(nameof(SeasonXpCount));
             }
         }
         public long ActivityCount
@@ -116,7 +116,7 @@ namespace Xbox.Ambassadors.ViewModels.Profile
             set
             {
                 activityCount = value;
-                RaisePropertyChanged("ActivityCount");
+                RaisePropertyChanged(nameof(ActivityCount));
             }
         }
         public long XpCount
@@ -125,7 +125,7 @@ namespace Xbox.Ambassadors.ViewModels.Profile
             set
             {
                 xpCount = value;
-                RaisePropertyChanged("XpCount");
+                RaisePropertyChanged(nameof(XpCount));
             }
         }
 
@@ -135,7 +135,7 @@ namespace Xbox.Ambassadors.ViewModels.Profile
             set
             {
                 lifetimeXP = value;
-                RaisePropertyChanged("LifetimeXP");
+                RaisePropertyChanged(nameof(LifetimeXP));
             }
         }
         public SeriesCollection LifetimeActivities
@@ -144,7 +144,7 @@ namespace Xbox.Ambassadors.ViewModels.Profile
             set
             {
                 lifetimeActivities = value;
-                RaisePropertyChanged("LifetimeActivities");
+                RaisePropertyChanged(nameof(LifetimeActivities));
             }
         }
 
@@ -175,11 +175,12 @@ namespace Xbox.Ambassadors.ViewModels.Profile
                     Values = new ChartValues<ObservableValue> { new ObservableValue(i.XpEarned) },
                     DataLabels = true
                 };
-                PieSeries serie2 = new PieSeries()
+                ColumnSeries serie2 = new ColumnSeries()
                 {
                     Title = i.Description,
                     Values = new ChartValues<ObservableValue> { new ObservableValue(i.CompletedActivityCount) },
-                    DataLabels = true
+                    DataLabels = true, 
+                    MaxColumnWidth = 100
                 };
 
                 c.Add(serie);

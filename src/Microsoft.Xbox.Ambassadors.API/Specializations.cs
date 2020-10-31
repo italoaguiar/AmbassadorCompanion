@@ -11,9 +11,9 @@ using System.Text.Json;
 
 namespace Microsoft.Xbox.Ambassadors.API
 {
-    public class Specializations
+    public static class Specializations
     {
-        const string REQUEST_URI = "https://ambassadors.westus.cloudapp.azure.com:8637/api/profiles/specializations";
+        const string REQUEST_URI = "https://ambassadors-production.azure-api.net/api/profiles/specializations";
 
         public async static Task<Specialization[]> GetAsync(AccessToken token)
         {

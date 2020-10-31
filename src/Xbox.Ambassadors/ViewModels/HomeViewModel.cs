@@ -74,7 +74,7 @@ namespace Xbox.Ambassadors.ViewModels
 
                 IsThreadsLoading = false;
             }
-            catch
+            catch (Exception e)
             {
                 IsThreadsLoading = false;
                 ThreadsLoadFailed = true;

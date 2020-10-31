@@ -10,7 +10,7 @@ namespace Microsoft.Xbox.Ambassadors.API
 {
     public class Identity
     {
-        const string REQUEST_URI = "https://ambassadors.westus.cloudapp.azure.com:8637/api/identity";
+        const string REQUEST_URI = "https://ambassadors-production.azure-api.net/api/identity";
 
         public static async Task<Identity> GetAsync(AccessToken token)
         {

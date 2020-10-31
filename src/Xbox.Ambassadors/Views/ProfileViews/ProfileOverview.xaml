@@ -112,64 +112,28 @@
             <c:UniformGrid x:Name="ug1" Rows="1">
                 <StackPanel MinWidth="400">
                     <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextTrimming="CharacterEllipsis">
-                            XP (<Run Text="{x:Bind ViewModel.SeasonXpCount,Mode=OneWay}"/>)
-                    </TextBlock>
-                    <chart:PieChart InnerRadius="80" Series="{x:Bind ViewModel.SeasonXPChartData,Mode=OneWay}" Height="280" >
-                        <chart:PieChart.ChartLegend>
-                            <chart:DefaultLegend BulletSize="20"></chart:DefaultLegend>
-                        </chart:PieChart.ChartLegend>
-                        <chart:PieChart.DataTooltip>
-                            <chart:DefaultTooltip BulletSize="20"></chart:DefaultTooltip>
-                        </chart:PieChart.DataTooltip>
-                    </chart:PieChart>
-                    <ListBox IsEnabled="False"  Height="50" HorizontalAlignment="Center" Margin="0,15,0,20" ItemsSource="{x:Bind ViewModel.SeasonXPChartData,Mode=OneWay}" BorderThickness="0" Background="Transparent">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate >
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Rectangle Width="20" Height="10" Fill="{Binding Fill}"/>
-                                    <TextBlock Grid.Column="1" Margin="5,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Text="{Binding Title}" />
-                                </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <c:UniformGrid Rows="2"/>
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem">
-                                <Setter Property="Background" Value="Transparent" />
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="ListBoxItem">
-                                            <ContentPresenter />
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                    </ListBox>
-                </StackPanel>
-                <StackPanel MinWidth="400">
-                    <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextTrimming="CharacterEllipsis">
                         Activities (<Run Text="{x:Bind ViewModel.SeasonActivityCount,Mode=OneWay}"/>)
                     </TextBlock>
-                    <chart:PieChart InnerRadius="80" Series="{x:Bind ViewModel.SeasonActivitiesChartData,Mode=OneWay}" Height="280" >
-                        <chart:PieChart.ChartLegend>
-                            <chart:DefaultLegend BulletSize="20"></chart:DefaultLegend>
-                        </chart:PieChart.ChartLegend>
-                        <chart:PieChart.DataTooltip>
-                            <chart:DefaultTooltip BulletSize="20"></chart:DefaultTooltip>
-                        </chart:PieChart.DataTooltip>
-                    </chart:PieChart>
-                    <ListBox IsEnabled="False" Height="50" HorizontalAlignment="Center" Margin="15,15,15,20" ItemsSource="{x:Bind ViewModel.SeasonActivitiesChartData,Mode=OneWay}" BorderThickness="0" Background="Transparent">
+                    <chart:CartesianChart Series="{x:Bind ViewModel.SeasonActivitiesChartData,Mode=OneWay}" Height="280" >
+                        <chart:CartesianChart.AxisX>
+                            <chart:Axis>
+                                <chart:Axis.Separator>
+                                    <chart:Separator Stroke="#FF262626" StrokeThickness="1" />
+                                </chart:Axis.Separator>
+                            </chart:Axis>
+                        </chart:CartesianChart.AxisX>
+                        <chart:CartesianChart.AxisY>
+                            <chart:Axis>
+                                <chart:Axis.Separator>
+                                    <chart:Separator Stroke="#FF262626" StrokeThickness="1" />
+                                </chart:Axis.Separator>
+                            </chart:Axis>
+                        </chart:CartesianChart.AxisY>
+                    </chart:CartesianChart>
+                    <ListBox IsEnabled="False" HorizontalAlignment="Center" Margin="15,15,15,20" ItemsSource="{x:Bind ViewModel.SeasonActivitiesChartData,Mode=OneWay}" BorderThickness="0" Background="Transparent">
                         <ListBox.ItemTemplate>
                             <DataTemplate >
-                                <Grid>
+                                <Grid Margin="10,5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition/>
@@ -181,7 +145,7 @@
                         </ListBox.ItemTemplate>
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <c:UniformGrid Rows="2"/>
+                                <StackPanel Orientation="Horizontal"/>
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemContainerStyle>

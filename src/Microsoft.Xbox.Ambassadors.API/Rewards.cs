@@ -11,9 +11,9 @@ namespace Microsoft.Xbox.Ambassadors.API
 {
     public static class Rewards
     {
-        const string REQUEST_URI = "https://ambassadors.westus.cloudapp.azure.com:8637/api/rewards/season/";
+        const string REQUEST_URI = "https://ambassadors-production.azure-api.net/api/rewards/season/";
 
-        const string REWARDED_SESSIONS_URI = "https://ambassadors.westus.cloudapp.azure.com:8637/api/rewards/rewardedseasons";
+        const string REWARDED_SESSIONS_URI = "https://ambassadors-production.azure-api.net/api/rewards/rewardedseasons";
 
         public static async Task<Reward[]> GetRewardsAsync(AccessToken token, int seasonId)
         {

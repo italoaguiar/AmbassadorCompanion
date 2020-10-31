@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
+using Windows.Security.Authentication.Web.Core;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.ApplicationSettings;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -255,6 +257,7 @@ namespace Xbox.Ambassadors.Views
                 DismissExtendedSplash();
             }
         }
+
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {

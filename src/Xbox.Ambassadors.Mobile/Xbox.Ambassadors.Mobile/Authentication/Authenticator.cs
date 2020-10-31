@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Auth;
-using static Android.Hardware.Biometrics.BiometricPrompt;
 
 namespace Xbox.Ambassadors.Mobile.Authentication
 {

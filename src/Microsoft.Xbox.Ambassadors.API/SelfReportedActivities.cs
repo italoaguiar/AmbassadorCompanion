@@ -11,8 +11,8 @@ namespace Microsoft.Xbox.Ambassadors.API
 {
     public class SelfReportedActivity
     {
-        private const string REQUEST_URI = "https://ambassadors.westus.cloudapp.azure.com:8637/api/activities/selfreported";
-        private const string POST_URI = "https://ambassadors.westus.cloudapp.azure.com:8637/api/activities/";
+        private const string REQUEST_URI = "https://ambassadors-production.azure-api.net/api/activities/selfreported";
+        private const string POST_URI = "https://ambassadors-production.azure-api.net/api/activities/";
 
         public static async Task<SelfReportedActivity[]> GetAsync(AccessToken token)
         {

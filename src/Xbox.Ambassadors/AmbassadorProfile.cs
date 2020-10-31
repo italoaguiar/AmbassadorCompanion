@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xbox.Ambassadors.API;
 using System;
 using System.Threading.Tasks;
+using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Xbox.Ambassadors.Auth;
@@ -28,7 +29,7 @@ namespace Xbox.Ambassadors
                 {
                     await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
-                        string message = "To access this application you must be an Xbox ambassador. You will be redirected to the Xbox Ambassadors website where you can join the program.";
+                        string message = "To access this app you must be an Xbox ambassador. You will be redirected to the Xbox Ambassadors website where you can join the program.";
                         MessageDialog md = new MessageDialog(message, "Just one more minute...");
                         await md.ShowAsync();
 
@@ -49,6 +50,35 @@ namespace Xbox.Ambassadors
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
+
+                
+
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
+                    var msg = "Could not connect to the server.";
+                    var title = "An error occurred while sending the request.";
+                    MessageDialog md = new MessageDialog(msg, title);
+                    md.Commands.Add(new UICommand
+                    {
+                        Id = 1,
+                        Label = "Stay in the app"
+                    });
+                    md.Commands.Add(new UICommand
+                    {
+                        Id = 2,
+                        Label = "Go to the ambassadors website",
+                        Invoked = async (s) => { await Launcher.LaunchUriAsync(new Uri("https://ambassadors.microsoft.com/xbox")); }
+                    });
+                    md.Commands.Add(new UICommand
+                    {
+                        Id = 2,
+                        Label = "Report a issue",
+                        Invoked = async (s) => { await Launcher.LaunchUriAsync(new Uri("https://github.com/italoaguiar/AmbassadorCompanion/issues")); }
+                    });
+                    md.DefaultCommandIndex = 0;
+                    await md.ShowAsync();
+                });
+
                 return false;
             }
         }

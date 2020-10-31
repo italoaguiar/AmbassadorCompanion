@@ -11,9 +11,9 @@ namespace Microsoft.Xbox.Ambassadors.API
 {
     public static class Quizzes
     {
-        private const string BASE_URI = "https://ambassadors.westus.cloudapp.azure.com:8637/api/academy/quizzes/";
-        private const string REQUEST_URI = "https://ambassadors.westus.cloudapp.azure.com:8637/api/academy/quizzes?nonCourseQuizzesOnly=";
-        private const string GRADE_URI = "https://ambassadors.westus.cloudapp.azure.com:8637/api/academy/quizzes/grade/";
+        private const string BASE_URI = "https://ambassadors-production.azure-api.net/api/academy/quizzes/";
+        private const string REQUEST_URI = "https://ambassadors-production.azure-api.net/api/academy/quizzes?nonCourseQuizzesOnly=";
+        private const string GRADE_URI = "https://ambassadors-production.azure-api.net/api/academy/quizzes/grade/";
 
         public static async Task<Quizz[]> GetAsync(AccessToken token, bool nonCourseQuizzesOnly = true)
         {

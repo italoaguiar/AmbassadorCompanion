@@ -11,7 +11,7 @@ namespace Microsoft.Xbox.Ambassadors.API
 {
     public static class Notifications
     {
-        const string REQUEST_URI = "https://ambassadors.westus.cloudapp.azure.com:8637/api/notifications";
+        const string REQUEST_URI = "https://ambassadors-production.azure-api.net/api/notifications";
 
         public static async Task<Notification[]> GetAsync(AccessToken token)
         {

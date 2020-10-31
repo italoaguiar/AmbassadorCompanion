@@ -40,6 +40,8 @@ namespace Xbox.Ambassadors
             AnalyticsManager.Current.ReportUncaughtExceptions = true; //catch unhandled exceptions and send the details
             AnalyticsManager.Current.AutoAppLifetimeMonitoring = true; //handle suspend/resume and empty hit batched hits on suspend
 
+            //ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
+
             AnalyticsTracker = AnalyticsManager.Current.CreateTracker("Google Analytics Key");
 
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Xbox")

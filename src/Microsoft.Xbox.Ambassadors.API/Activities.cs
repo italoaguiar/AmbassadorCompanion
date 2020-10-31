@@ -6,16 +6,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace Microsoft.Xbox.Ambassadors.API
 {
-    public class Activities
+    public static class Activities
     {
-        const string REQUEST_URI = "https://ambassadors.westus.cloudapp.azure.com:8637/api/activities?type={0}&page={1}";
+        const string REQUEST_URI = "https://ambassadors-production.azure-api.net/api/activities?type={0}&page={1}";
 
         public async static Task<DailyActivities[]> GetAsync(AccessToken token, ActivityType aType, int page = 1)
         {
-            string req = string.Format(REQUEST_URI, aType, page);
+            if (token == null)
+                throw new ArgumentNullException(nameof(token));
+
+            string req = string.Format(CultureInfo.InvariantCulture, REQUEST_URI, aType, page);
             return await HttpUtil.GetAsync<DailyActivities[]>(token, new Uri(req));
         }
     }

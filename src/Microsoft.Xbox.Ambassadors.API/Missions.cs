@@ -11,7 +11,7 @@ namespace Microsoft.Xbox.Ambassadors.API
 {
     public partial class Missions
     {
-        const string REQUEST_URI = "https://ambassadors.westus.cloudapp.azure.com:8637/api/missions?hasCompleted=";
+        const string REQUEST_URI = "https://ambassadors-production.azure-api.net/api/missions?hasCompleted=";
 
 
         [JsonPropertyName("id")]

@@ -11,7 +11,7 @@ namespace Microsoft.Xbox.Ambassadors.API
 {
     public class Profiles:INotifyPropertyChanged
     {
-        const string REQUEST_URI = "https://ambassadors.westus.cloudapp.azure.com:8637/api/profiles/";
+        const string REQUEST_URI = "https://ambassadors-production.azure-api.net/api/profiles";
 
         
 

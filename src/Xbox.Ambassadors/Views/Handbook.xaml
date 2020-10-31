@@ -109,7 +109,7 @@
                 RelativePanel.AlignTopWithPanel="True"
                 RelativePanel.RightOf="sideList"
                 RelativePanel.AlignRightWithPanel="True"
-                MinHeight="800"
+                MinHeight="400"
                 x:Name="content" 
                 DataContext="{x:Bind ViewModel.SelectedItem,Mode=OneWay}"
                 Margin="0,0,0,10"

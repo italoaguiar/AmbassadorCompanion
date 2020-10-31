@@ -11,7 +11,7 @@ namespace Microsoft.Xbox.Ambassadors.API
 {
     public partial class Leaderboard
     {
-        const string REQUEST_URI = "https://ambassadors.westus.cloudapp.azure.com:8637/api/leaderboard/{0}?page={1}&pagesize={2}";
+        const string REQUEST_URI = "https://ambassadors-production.azure-api.net/api/leaderboard/{0}?page={1}&pagesize={2}";
 
         [JsonPropertyName("items")]
         public List<Item> Items { get; set; }
