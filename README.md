@@ -24,11 +24,11 @@ During the development of this project, we tried to bring all the features of th
   * Self report missions
 * Integrated Xbox forum
 * Sweepstakes page
-* Video gallery integrated with YouTube
+* ~~Video gallery integrated with YouTube~~ *(Discontinued)*
 * Rewards page (Read only)
-* Accademy
-  * Quizzes
-  * Courses
+* ~~Accademy~~ *(Discontinued)*
+  * ~~Quizzes~~
+  * ~~Courses~~
 * Ambassador Handbook
 * Xbox Live Status page
 * Notifications page
