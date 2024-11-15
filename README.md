@@ -1,6 +1,17 @@
 # Ambassador Companion
 “Ambassador Companion” is an app for **Windows 10** and **Xbox One** (and now **Xbox Series X/S**) designed to bring the full experience of the [Ambassadors website](https://ambassadors.microsoft.com/xbox) to the console and desktop.
 
+# Note to the community
+As many of you may already know, Microsoft has discontinued the Xbox Ambassadors program. During the many years I was part of the community, I had the immense pleasure of experiencing incredible things, which allowed me to see that gaming should always be a safe and inclusive environment for everyone.
+
+Although not in an official capacity, the development of an app for Xbox Ambassadors was my way of listening to the many ambassadors who requested such an app and, at the same time, making a small contribution to this very special community.
+
+I am immensely grateful to everyone who supported me during the development of this app, as well as to those who gave me their support after its release. I sincerely apologize to anyone who experienced technical difficulties or encountered any bugs while using it.
+
+This repository will now be archived, but feel free to use the code in other projects or simply as a learning tool.
+
+Thank you.
+
 ## Features
 During the development of this project, we tried to bring all the features of the [ambassadors platform](https://ambassadors.microsoft.com/xbox) in one place. Our application, initially had the following features:
 * ~~Responder / Twitter~~ *(Discontinued)*
